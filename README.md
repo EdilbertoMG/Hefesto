@@ -251,3 +251,5 @@ public override List<PracticaHijo> BuscarTodos()
 12.	Por último, crear los sp_API y sp_WSG correspondiente para mantener la compatibilidad.
 
 Con todos estos pasaso ya nuestro BackEnd esta listo para hacer las pruebas necesarias.
+
+Puede Continuar con el <a href="http://www.google.com">Front End</a>, si no genera Documentos, pero si genera Documentos de soporte continue con el siguiente <a href="http://www.google.com">Back End Documetos de soporte</a>, pero si su Documentos es de los que generan contabilización continue con el siguiente <a href="http://www.google.com">Back End Documetos que generan contabilización</a>
