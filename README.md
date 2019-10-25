@@ -13,6 +13,9 @@ _Después de generar los archivos en el Smart code se deben copiar los archivos 
 4.	Editar el archivo **Zeus.Inventario.Infrastructure\Factories\ZeusContextoDB.cs**, ir al final del archivo y asegurarse de crear las líneas de código correspondientes a la tabla en cuestión.
 Declarar:
 ```
-public DbSet<Colores> Colores { get; set; }
-
+public DbSet<Colores> **Colores** { get; set; }
+```
+Y en el método **OnModelCreating** y agregar una nueva línea correspondiente a la tabla en cuestión:
+```
+modelBuilder.ApplyConfiguration(new ColoresMap());
 ```
