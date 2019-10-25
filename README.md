@@ -17,5 +17,5 @@ public DbSet<Colores> Colores { get; set; }
 ```
 Y en el método **OnModelCreating** y agregar una nueva línea correspondiente a la tabla en cuestión:
 ```
-modelBuilder.ApplyConfiguration(new ColoresMap());
+modelBuilder.ApplyConfiguration(new `Colores`Map());
 ```
