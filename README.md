@@ -208,6 +208,12 @@ public PracticaHijo() {
 •	Para el caso de Foraneos opcionales y campos numéricos, debemos crear una propiedad Boleana con el prefijo **ShouldSerialize** para que al convertir el objeto a XML el nodo del Foraneo no viaje.  
 Esto lo puede generar automáticamente:
 ```
+public bool ShouldSerializeCantidadJuguetes()
+        {
+            return CantidadJuguetes.HasValue;
+        }
+```        
+```
 Execute spSistema_Hefesto 'ShouldSerialize', 'TABLA'
 ```
 •	Luego en la carpeta **Zeus.Inventario.BusinessLogic** el archivo **XXXXXBusinessLogic** del **Custom** se debe sobrescribir el método **BuscarPorId()**, esto para personalizar los datos que serán consultados juntos con sus foraneos.
