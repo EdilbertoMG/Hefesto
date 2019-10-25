@@ -184,8 +184,51 @@ namespace Zeus.Inventario.Api.Controllers
 }
 ```
 11.	Para los foráneos.
+
 •	Primero se debe colocar en comentarios la propiedad foránea en la entidad **Zeus.Inventario.Infrastructure.Entities** generada por el Smart Code, las imágenes siguientes corresponden al ejemplo tipo de PracticaHijo.
 <img src="https://i.ibb.co/9bFXbPR/Screenshot-1.png" alt="Logotipo de HTML5">
-•	En la entidad Custom se declarar una propiedad del tipo del objeto foráneo e inicializar este objeto en el constructor de la entidad, por ejemplo:
 
+•	En la entidad Custom se declara una propiedad del tipo del objeto foráneo e inicializar este objeto en el constructor de la entidad, por ejemplo:
+```
+[XmlIgnore]
+        [ForeignKey("IdenPapa")]
+        public virtual PracticaPadre Papa { get; set; }
 
+public PracticaHijo() {
+            this.Papa = new PracticaPadre();
+        }
+```
+•	Luego se debe declarar la propiedad de la siguiente forma.
+```
+[RecursoDisplayName("PracticaHijo.IdenPapa")]
+        [Column("IdenPapa")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo IdenPapa es requerido")]
+        public virtual Decimal IdenPapa { get; set; }
+```
+•	Para el caso de Foraneos opcionales y campos numéricos, debemos crear una propiedad Boleana con el prefijo **ShouldSerialize** para que al convertir el objeto a XML el nodo del Foraneo no viaje.  
+Esto lo puede generar automáticamente:
+```
+Execute spSistema_Hefesto 'ShouldSerialize', 'TABLA'
+```
+•	Luego en la carpeta **Zeus.Inventario.BusinessLogic** el archivo **XXXXXBusinessLogic** del **Custom** se debe sobrescribir el método **BuscarPorId()**, esto para personalizar los datos que serán consultados juntos con sus foraneos.
+```
+public override PracticaHijo BuscarPorId(Expression<Func<PracticaHijo, bool>> predicate)
+        {
+            PracticaHijo PracticaHijo = (UnidadTrabajo.Session as ZeusContextoDB)
+                    .PracticaHijo
+                    .Include(t => t.Papa)
+                    .SingleOrDefault(predicate);
+
+            return PracticaHijo;
+        }
+```   
+•	Y Tambien se crear el método **BuscarTodos()**
+```
+public override List<PracticaHijo> BuscarTodos()
+        {
+            return Tabla()
+                    .Include(t => t.Papa)
+                    .ToList();
+        }
+```
+Con todos estos pasaso ya nuestro BackEnd esta listo para hacer las pruebas necesarias.
