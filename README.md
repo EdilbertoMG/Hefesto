@@ -185,36 +185,32 @@ namespace Zeus.Inventario.Api.Controllers
 ```
 11.	Para los foráneos.
 
-•	Primero se debe colocar en comentarios o borrar la propiedad foránea en la entidad **Zeus.Inventario.Infrastructure.Entities** generada por el Smart Code, las imágenes siguientes corresponden al ejemplo tipo de PracticaHijo.
+•	Primero se debe colocar en comentarios o borrar la propiedad foránea en la entidad **Zeus.Inventario.Infrastructure.Entities** generada por el Smart Code, las imágenes siguientes corresponden al ejemplo tipo de ProduccionMaquinas.
 ```
-        /*
-        [RecursoDisplayName("PracticaHijo.IdenPapa")]
-        [Column("IDENPAPA")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo IdenPapa es requerido")]
-        public virtual Decimal IdenPapa { get; set; }
-        
-        [RecursoDisplayName("PracticaHijo.IdenMama")]
-        [Column("IDENMAMA")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo IdenMama es requerido")]
-        public virtual Decimal IdenMama { get; set; }
-        */
+       //[RecursoDisplayName("ProduccionMaquinas.IdenProducciontipomaquina")]
+       //[Column("IDEN_PRODUCCIONTIPOMAQUINA")]
+       //[Required(AllowEmptyStrings = false, ErrorMessage = "El campo Tipo de Máquina es requerido")]
+       //public virtual Decimal IdenProducciontipomaquina { get; set; }
 ```
-•	En la entidad Custom se declara una propiedad del tipo del objeto foráneo e inicializar este objeto en el constructor de la entidad, por ejemplo:
+•	En la entidad **Custom** se declara una propiedad del tipo del objeto foráneo.
 ```
 [XmlIgnore]
-        [ForeignKey("IdenPapa")]
-        public virtual PracticaPadre Papa { get; set; }
-
-public PracticaHijo() {
-            this.Papa = new PracticaPadre();
-        }
+                [ForeignKey("IdenProduccionTipoMaquina")]
+                public virtual ProduccionTipoMaquina ProduccionTipoMaquina { get; set; }
 ```
 •	Luego se debe declarar la propiedad de la siguiente forma.
 ```
-[RecursoDisplayName("PracticaHijo.IdenPapa")]
-        [Column("IdenPapa")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo IdenPapa es requerido")]
-        public virtual Decimal IdenPapa { get; set; }
+[RecursoDisplayName("ProduccionMaquinas.IdenProduccionTipoMaquina")]
+                [Column("IDEN_PRODUCCIONTIPOMAQUINA")]
+                [Required(AllowEmptyStrings = false, ErrorMessage = "El campo Tipo de Máquina es requerido")]
+                public virtual decimal IdenProduccionTipoMaquina { get; set; }
+```
+•	Inicializar este objeto en el constructor de la entidad:
+```                
+                public ProduccionMaquinas()
+                {
+                        this.ProduccionTipoMaquina = new ProduccionTipoMaquina();
+                }
 ```
 •	Para el caso de Foraneos opcionales y campos numéricos, debemos crear una propiedad Boleana con el prefijo **ShouldSerialize** para que al convertir el objeto a XML el nodo del Foraneo no viaje.  
 Esto lo puede generar automáticamente:
@@ -229,27 +225,27 @@ Execute spSistema_Hefesto 'ShouldSerialize', 'TABLA'
 ```
 •	Luego en la carpeta **Zeus.Inventario.BusinessLogic** el archivo **XXXXXBusinessLogic** del **Custom** se debe sobrescribir el método **BuscarPorId()**, esto para personalizar los datos que serán consultados juntos con sus foraneos.
 ```
-public override PracticaHijo BuscarPorId(Expression<Func<PracticaHijo, bool>> predicate)
+public override ProduccionMaquinas BuscarPorId(Expression<Func<ProduccionMaquinas, bool>> predicate)
         {
-            PracticaHijo PracticaHijo = (UnidadTrabajo.Session as ZeusContextoDB)
-                    .PracticaHijo
-                    .Include(t => t.Papa)
-                    .SingleOrDefault(predicate);
+                ProduccionMaquinas ProduccionMaquinas = (UnidadTrabajo.Session as ZeusContextoDB)
+                        .ProduccionMaquinas
+                        .Include(t => t.ProduccionTipoMaquina)
+                        .SingleOrDefault(predicate);
 
-            return PracticaHijo;
+                return ProduccionMaquinas;
         }
 ```   
-•	Y Tambien se crear el método **BuscarTodos()**
+•	Y Tambien se crear el método **BuscarTodos()**, esto es solo si tienes uno o mas foraneo.
 ```
-public override List<PracticaHijo> BuscarTodos()
+public override List<ProduccionMaquinas> BuscarTodos()
         {
-            return Tabla()
-                    .Include(t => t.Papa)
-                    .ToList();
+                return Tabla()
+                        .Include(t => t.ProduccionTipoMaquina)
+                        .ToList();
         }
 ```
 12.	Por último, crear los sp_API y sp_WSG correspondiente para mantener la compatibilidad.
 
 Con todos estos pasaso ya nuestro BackEnd esta listo para hacer las pruebas necesarias.
 
-Puede continuar con el <a href="http://www.google.com">FrontEnd</a>, si no genera documentos, pero si genera documentos de soporte continue con el siguiente <a href="http://www.google.com">BackEnd documetos de soporte</a>, pero si su Documentos es de los que generan contabilización continue con el siguiente <a href="http://www.google.com">BackEnd documetos que generan contabilización</a>
+Puede continuar con el <a href="#">FrontEnd</a>, si no genera documentos, pero si genera documentos de soporte continue con el siguiente <a href="https://github.com/EdilbertoMG/Hefesto/blob/master/BackEndParaDocumentosDeSoporte.md">BackEnd documetos de soporte</a>, pero si su Documentos es de los que generan contabilización continue con el siguiente <a href="#">BackEnd documetos que generan contabilización</a>
