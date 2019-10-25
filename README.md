@@ -185,9 +185,20 @@ namespace Zeus.Inventario.Api.Controllers
 ```
 11.	Para los foráneos.
 
-•	Primero se debe colocar en comentarios la propiedad foránea en la entidad **Zeus.Inventario.Infrastructure.Entities** generada por el Smart Code, las imágenes siguientes corresponden al ejemplo tipo de PracticaHijo.
-<img src="https://i.ibb.co/9bFXbPR/Screenshot-1.png" alt="Logotipo de HTML5">
-
+•	Primero se debe colocar en comentarios o borrar la propiedad foránea en la entidad **Zeus.Inventario.Infrastructure.Entities** generada por el Smart Code, las imágenes siguientes corresponden al ejemplo tipo de PracticaHijo.
+```
+        /*
+        [RecursoDisplayName("PracticaHijo.IdenPapa")]
+        [Column("IDENPAPA")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo IdenPapa es requerido")]
+        public virtual Decimal IdenPapa { get; set; }
+        
+        [RecursoDisplayName("PracticaHijo.IdenMama")]
+        [Column("IDENMAMA")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo IdenMama es requerido")]
+        public virtual Decimal IdenMama { get; set; }
+        */
+```
 •	En la entidad Custom se declara una propiedad del tipo del objeto foráneo e inicializar este objeto en el constructor de la entidad, por ejemplo:
 ```
 [XmlIgnore]
@@ -237,4 +248,6 @@ public override List<PracticaHijo> BuscarTodos()
                     .ToList();
         }
 ```
+12.	Por último, crear los sp_API y sp_WSG correspondiente para mantener la compatibilidad.
+
 Con todos estos pasaso ya nuestro BackEnd esta listo para hacer las pruebas necesarias.
