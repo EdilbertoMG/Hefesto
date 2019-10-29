@@ -349,3 +349,32 @@ GO
 @inject ILanguageResource languageResource
 ```
 •	Agregar una lista de botones con el nombre **buttonsList** la cual será adicionada a los botones de la barra de la vista.
+
+```
+@{
+        List<object> buttonsList = new List<object>
+{
+                new {
+                        htmlContent = "<img src=\"../images/icon-variable2.png\"></img>",
+                        action = "javascript:showModalVariables()",
+                        tooltip = "Variables Adicionales",
+                        showInNew = false
+                },
+                new {
+                        htmlContent = "<i class=\"fas fa-file-contract\"></i>",
+                        action = "javascript:showModalMasterDocuments()",
+                        tooltip = "Documentos",
+                        showInNew = false
+                }
+        };
+}
+```
+
+•	Agregue a la barra la lista de botones **buttonsList**, **languageResource.Language** y un título en ingles de la vista.
+
+```	
+buttonsList,
+ languageResource.Language,
+ "Production machines"
+```
+<img src="https://github.com/EdilbertoMG/Hefesto/blob/master/Imagenes/ButtonList.png" alt="Agregar Button List">
