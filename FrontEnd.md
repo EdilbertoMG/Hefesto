@@ -410,3 +410,74 @@ languageResource.Language,
 </script>
 ```
 <img src="https://github.com/EdilbertoMG/Hefesto/blob/master/Imagenes/JavaScript.png" alt="JavaScript">
+
+15.	Agregar foráneos: 
+•	Primero hay que identificar cual es el campo foráneo **Iden** si lo hay, la llave lógica del foráneo y el campo nombre del foráneo que se mostrarán en la vista. 
+
+•	Abrir el Back End y buscar en la ruta **PUT** (actualizar) y garantizar que se asigne el objeto de navegación esta en **Zeus.Inventario.Api/Controllers**.
+
+```
+/// <summary>
+        /// Modifica un registro
+        /// </summary>
+        /// <param name="model"></param>
+        [HttpPut]
+        public ProduccionMaquinas Put([FromBody] ProduccionMaquinas model, string iduser)
+        {
+            try
+            {
+                var objetoActual = Manager().ProduccionMaquinasBusinessLogic().BuscarPorId( t => t.Iden == model.Iden );
+
+                objetoActual.Codigo = model.Codigo;
+                objetoActual.Nombre = model.Nombre;
+                objetoActual.IdenProduccionTipoMaquina = model.IdenProduccionTipoMaquina;
+                objetoActual.Descripcion = model.Descripcion;
+                objetoActual.NoOperadores = model.NoOperadores;
+                objetoActual.Costominuto = model.Costominuto;
+                objetoActual.Costominuto2 = model.Costominuto2;
+
+                // Todos los foraneos
+                objetoActual.ProduccionTipoMaquina = model.ProduccionTipoMaquina;
+
+                List<ProduccionMaquinas> modelLevelAccess = Manager().ProduccionMaquinasBusinessLogic().GetModelsByLevelAccess("EDIT");
+
+                if (modelLevelAccess != null && !modelLevelAccess.Any(t => t.Iden == model.Iden))
+                {
+					throw new UnauthorizedAccessException("¡No tiene permisos para realizar esa operación!");
+                }
+
+                return Manager().ProduccionMaquinasBusinessLogic().Modificar(objetoActual);
+
+            }
+```
+
+<img src="https://github.com/EdilbertoMG/Hefesto/blob/master/Imagenes/AgregarForaneo%20en%20el%20Put.png" alt="Agregar Foraneo en el Put">
+
+•	Editar El archivo del Front End **XXXXXXModel.cs** y asignar los objetos de navegación dentro de la carpeta **Zeus.Inventario.UI/Models**.
+
+```
+public static ProduccionMaquinasModel ToModel(this ProduccionMaquinas entity)
+		{
+			if (entity == null)
+			{
+				return null;
+			}
+
+			return new ProduccionMaquinasModel
+			{
+                                Iden = entity.Iden,
+                                Codigo = entity.Codigo,
+                                Nombre = entity.Nombre,
+                                IdenProduccionTipoMaquina = entity.IdenProduccionTipoMaquina,
+                                Descripcion = entity.Descripcion,
+                                NoOperadores = entity.NoOperadores,
+                                Costominuto = entity.Costominuto,
+                                Costominuto2 = entity.Costominuto2,
+                                TieneErrores = entity.TieneErrores,
+                                ProduccionTipoMaquina = entity.ProduccionTipoMaquina,
+
+                                Errores = entity.Errores,
+                                EsNuevo = entity.EsNuevo
+			};
+		}
+```
