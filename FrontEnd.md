@@ -217,3 +217,135 @@ namespace Zeus.Inventario.Api.Controllers
     }
 }
 ```
+
+12.	Si la llave primaria es un **Iden**, también hay agregar al proyecto **Zeus.Inventario.UI.WebApp\Controllers\Custom** una copia del archivo **NOMBREDELOBJETOController.cs** y agregar un nuevo controlador el cual utilizará el nuevo método creado en el proxi **FindById**.
+
+```
+using DevExtreme.AspNet.Data;
+using DevExtreme.AspNet.Data.ResponseModel;
+using DevExtreme.AspNet.Mvc;
+using Hefesto.Backend.Core.Utilities;
+using Hefesto.Frontend.Core.Controllers;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Zeus.Inventario.Infrastructure.Entities;
+using Zeus.Inventario.UI.Data.Factories;
+using Zeus.Inventario.UI.Models;
+
+namespace Zeus.Inventario.UI.Modules.Controllers
+{
+    [Authorize] 
+    public partial class ProduccionMaquinasController 
+    {
+        [HttpGet]
+        public IActionResult GetByCode(string codigo, string nextFieldFocus)
+        {
+                ViewBag.NextFocus = nextFieldFocus;
+                ViewBag.PrefixProduccionMaquinas = Prefix;
+                if (string.IsNullOrEmpty(codigo))
+                {
+                        ModelState.AddModelError($"{Prefix}_Codigo", "Código esta vacio");
+                        return PartialView("ProduccionMaquinasEdit", GetNewModel());
+                }
+
+                ProduccionMaquinasModel model = Manager().ProduccionMaquinasBusinessLogic().FindById(codigo).ToModel();
+
+                if (model == null)
+                {
+                        model = GetNewModel();
+                        model.EsNuevo = true;
+                        model.Iden = 0;
+                        model.Codigo = codigo;
+
+                        return PartialView("ProduccionMaquinasEdit", model);
+                }
+
+                return PartialView("ProduccionMaquinasEdit", model);
+        }
+    }
+}
+```
+
+13.	Agregar control del buscador principal en la vista **NOMBREOBJETOEdit.cshtml**, Se puede hacer manualmente esta operación, pero se recomienda utilizar la siguiente instrucción SQL que ayuda a generarlo de forma automática.
+```
+Execute spSistema_Hefesto @Op= 'BuscadorPrincipal', @Tabla = 'TipoAsociado', @LLaveLogica = 'Codigo', @SiguienteCampo = 'Nombre'
+```
+Dando como resultado algo como esto:
+```
+<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 ">
+                                <div class="form-group">
+                                        <label for=@(ViewBag.PrefixTipoAsociado + "_Codigo")>
+                                                @(Html.ZeusCore().ValidationMessageFor(t => t.Codigo, languageResource.GetRecurso("Codigo "), new { @class = "lbl-msg-required" }))
+                                        </label>
+                                        <div class="input-group mb-3 searcher-group">
+                                                @(Html.Zeus().TextBoxFor(m => m.Codigo)
+                                                .InputAttr(new
+                                                {
+                                                        @class = "form-control searcher-field searcher-event",
+                                                        idBtnSearcher = "TipoAsociado_btnOpenSearcher",
+                                                        panelHeader = panelHeader,
+                                                        panelGeneral = panelGeneral
+                                                })
+                                                )
+                                                <a id="TipoAsociado_btnOpenSearcher" title="Buscar"
+                                                   class="input-group-append searcher-btn searcher-btn-event"
+                                                   searcherCode="TIPOASOCIADO"
+                                                   typeSelect="SELECT"
+                                                   pathController="/TipoAsociado/GetByCode/$Codigo"
+                                                   prefix="@ViewBag.PrefixTipoAsociado"
+                                                   onPrepareData=""
+                                                   textboxF4=@(ViewBag.PrefixTipoAsociado + "_Codigo")
+                                                   nextFieldFocus=@(ViewBag.PrefixTipoAsociado + "_Nombre")>
+                                                        <i class="fas fa-search searcher-icon"></i>
+                                                </a>
+                                        </div>
+                                </div>
+                        </div>
+```
+Hasta este punto ya debe mostrar en el menú y el buscador principal debe funcionar sin problema.
+
+14.	Agregar funcionalidad de variables adicionales y datos adjuntos.
+•	Editar el archivo **z2999999 DatosPorDefault_Hefesto_Adjuntos.sql**.
+Se debe primero identificar si existe un código en la tabla **VariableDefinicionMaestro** que corresponda con el objeto que se está creando, esto con el objetivo que tanto para las variables adicionales como para los adjuntos se maneje el mismo código, posteriormente agregar la información correspondiente al objeto en cuestión.  **OJO** si existe ya el registro en el estándar, hay que respetar el existente y hacer que coincidan el campo **Tabla** de la tabla **VariableDefinicionMaestro** y el campo **ds_nombre** de la tabla **SYS_ENTIDADES**.
+Tener en cuenta que el campo **id** de la tabla **SYS_ENTIDADES** se debe incrementar cada vez que se agregue uno nuevo.
+
+```
+---------------------------------------------------------------------------------------------------
+----------------------------------- ProduccionTipoMaquina
+---------------------------------------------------------------------------------------------------
+-- Adjuntos
+If Not Exists(Select * from SYS_ENTIDADES Where id = 2)
+Begin
+	insert Into SYS_ENTIDADES (id, ds_nombre, ds_descripcion)
+	values (2 ,'ProTipoMaquina', 'Tipos de Máquinas de Producción')
+End
+
+-- Variables
+If Not Exists(Select * from VariableDefinicionMaestro Where Codigo = 'ProTipoMaquina' And IDEN_TipoVariable = 1 And IDEN_TipoTransaccion Is Null)
+Begin
+	Insert Into VariableDefinicionMaestro (IDEN_TipoVariable, IDEN_TipoTransaccion, Codigo, Nombre, Descripcion, Ventana, Tabla, CampoBusqueda, GrupoFormulacion) 
+	Values (1, Null, 'ProTipoMaquina', 'Producción - Tipos de Máquina de producción', '', '', 'ProTipoMaquina', 'Codigo', Null)
+End
+Else
+Begin
+	Update	VariableDefinicionMaestro
+	Set	Tabla = 'ProTipoMaquina'
+	Where		Codigo = 'ProTipoMaquina'
+		And	IDEN_TipoVariable = 1
+		And	IDEN_TipoTransaccion Is Null
+End
+
+GO
+```
+
+•	Editar la vista **_NOMBREOBJETOEdit.cshtml**.
+•	Agregar la siguiente instrucción al principio de la página.
+```
+@inject ILanguageResource languageResource
+```
+•	Agregar una lista de botones con el nombre **buttonsList** la cual será adicionada a los botones de la barra de la vista.
