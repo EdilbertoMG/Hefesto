@@ -44,20 +44,71 @@ Importante es que estas opciones de menú se les configura el controlador y la a
 <img src="https://github.com/EdilbertoMG/Hefesto/blob/master/Imagenes/EliminarIden.png" alt="Eliminar Iden">
 
 Algo muy importante es que si se piensa mostrar el nombre de un foráneo en particular hay que hacer lo siguiente: 
-•	El control **Html.Zeus().DataGridBasi** apunta al controlador GET del objeto.
+•	El control **Html.Zeus().DataGridBasi** apunta al controlador GET del objeto de **Inventario.UI.Modules.Controllers**.
 
-<img src="https://github.com/EdilbertoMG/Hefesto/blob/master/Imagenes/Controlador%20Get%20del%20Objeto.jpg" alt="Controlador Get del Objeto">
+``` 
+ [HttpGet]
+                public LoadResult Get(DataSourceLoadOptions loadOptions)
+                {
+                        return Manager().ProduccionMaquinasBusinessLogic().Find(loadOptions).ToModels().ToLoadResult();
+                }
+``` 
 
-•	Este a su vez llama al proxi del objeto en el método **Find** el cual se comunica con la API en la ruta **GetByOptions**.
-<img src="https://github.com/EdilbertoMG/Hefesto/blob/master/Imagenes/M%C3%A9todo%20Find.jpg" alt="Metodo Find">
+•	Este a su vez llama al proxi del objeto en el método **Find** el cual se comunica con la API en la ruta **GetByOptions** dentro de **Inventario.UI.Data.Proxies**.
+``` 
+public ListaResultado<ProduccionMaquinas> Find(DataSourceLoadOptions loadOptions)
+        {
+            return Task.Run(async () => await FindAsync(loadOptions)).GetAwaiter().GetResult();
+        }
 
-•	Para lograr obtener la información de los foráneos se debe agregar los **Include** correspondientes.
+        public async Task<ListaResultado<ProduccionMaquinas>> FindAsync(DataSourceLoadOptions loadOptions)
+        {
+            var options = JsonConvert.SerializeObject(loadOptions);
+            var requestUri = string.Concat(serviceAddres, "/api/ProduccionMaquinas/GetByOptions?options=" + options);
+            var response = await HttpRequestFactory.Get(requestUri, token);
+            return response.ContentAsType<ListaResultado<ProduccionMaquinas>>();
+        }
+``` 
+•	Para lograr obtener la información de los foráneos se debe agregar los **Include** correspondientes en el Back End ****.
 
-<img src="https://github.com/EdilbertoMG/Hefesto/blob/master/Imagenes/Include.jpg" alt="Includes">
+```
+[HttpGet]
+        [Route("GetByOptions")]
+        public ListaResultado<ProduccionMaquinas> GetByOptions(string options)
+        {
+            DataSourceLoadOptions loadOptions = string.IsNullOrWhiteSpace(options) ? new DataSourceLoadOptions() : JsonConvert.DeserializeObject<DataSourceLoadOptions>(options);
+            return DataSourceLoader.Load(Manager().ProduccionMaquinasBusinessLogic().Tabla()
+                                                                                    .Include(t => t.ProduccionTipoMaquina)
+                    , loadOptions).ToListaResultado<ProduccionMaquinas>();
+        }
+```
+•	Por último, configurar en la grilla el nombre del **Foraneo** en la vista **xxxxxxxList.cshtml**.
 
-•	Por último, configurar en la grilla el nombre del **Foraneo**.
+```
+@(Html.Zeus().DataGridBasic<ProduccionMaquinasModel>(actionsList, buttonsList, false, false, @VIEWDET_PANELDETAIL)
+												.ID("ProduccionMaquinasModel_grid")
+												.DataSource(d => d.Mvc().Area("").Controller("ProduccionMaquinas").LoadAction("Get").Key("Iden")
+															.LoadParams(new { codeDetail = VIEWDET_HEADERMASTER_CODE }))
+												.Columns(columns =>
+													{
+												columns.AddFor(m => m.Codigo)
+																	.Caption("Código");
+												columns.AddFor(m => m.Nombre)
+																	.Caption("Nombre");
+												columns.AddFor(m => m.ProduccionTipoMaquina.Nombre)
+																	.Caption("Tipo de Máquina");
+												columns.AddFor(m => m.Descripcion)
+																	.Caption("Descripción");
+												columns.AddFor(m => m.NoOperadores)
+																	.Caption("No Operadores");
+												columns.AddFor(m => m.Costominuto)
+																	.Caption("Costo por Minuto");
+												columns.AddFor(m => m.Costominuto2)
+																	.Caption("Costo Mínuto Niif");
+													})
+												)
 
-<img src="https://github.com/EdilbertoMG/Hefesto/blob/master/Imagenes/Foraneo.jpg" alt="Foraneo">
+```
 
 9.	Editar la vista **XXXXXXEdit.cshtml**, hay que tener en cuenta varias cosas:
 
