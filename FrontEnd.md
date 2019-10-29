@@ -191,7 +191,7 @@ namespace Zeus.Inventario.UI.Data.Proxies
     }
 }
 ```
-Esta es la ruta que debe existir en le Back End en la carpeta **Zeus.Inventario.UI.Data/Controllers/Custom**
+Esta es la ruta que debe existir en el Back End en la carpeta **Zeus.Inventario.UI.Data/Controllers/Custom**
 ```
 using Microsoft.AspNetCore.Mvc;
 using Zeus.Inventario.BusinessLogic.Factories;
