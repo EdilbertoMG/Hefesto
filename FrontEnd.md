@@ -41,23 +41,23 @@ Importante es que estas opciones de menú se les configura el controlador y la a
 }                                        
 ```  
 8.	Ir al proyecto **Zeus.Inventario.UI.WebApp.csproj** y editar la vista **XXXXXXXXList.cshtml** con el objetivo de solo mostrar las columnas relevantes, por ejemplo, eliminar las columna **iden**.
-<img src="https://raw.githubusercontent.com/EdilbertoMG/Hefesto/master/Imagenes/EliminarIden.png?token=AHN7IGFKI64P2FHU3QASQN25XA236" alt="Eliminar Iden">
+<img src="https://github.com/EdilbertoMG/Hefesto/blob/master/Imagenes/EliminarIden.png" alt="Eliminar Iden">
 
 Algo muy importante es que si se piensa mostrar el nombre de un foráneo en particular hay que hacer lo siguiente: 
 •	El control **Html.Zeus().DataGridBasi** apunta al controlador GET del objeto.
 
-<img src="https://raw.githubusercontent.com/EdilbertoMG/Hefesto/master/Imagenes/Controlador%20Get%20del%20Objeto.jpg?token=AHN7IGCCNYPA5GHI5XBPSZS5XA3XI" alt="Controlador Get del Objeto">
+<img src="https://github.com/EdilbertoMG/Hefesto/blob/master/Imagenes/Controlador%20Get%20del%20Objeto.jpg" alt="Controlador Get del Objeto">
 
 •	Este a su vez llama al proxi del objeto en el método **Find** el cual se comunica con la API en la ruta **GetByOptions**.
-<img src="https://raw.githubusercontent.com/EdilbertoMG/Hefesto/master/Imagenes/M%C3%A9todo%20Find.jpg?token=AHN7IGGCJOH3DIMDPREM2NS5XA37C" alt="Metodo Find">
+<img src="https://github.com/EdilbertoMG/Hefesto/blob/master/Imagenes/M%C3%A9todo%20Find.jpg" alt="Metodo Find">
 
 •	Para lograr obtener la información de los foráneos se debe agregar los **Include** correspondientes.
 
-<img src="https://raw.githubusercontent.com/EdilbertoMG/Hefesto/master/Imagenes/Include.jpg?token=AHN7IGE7TF42N6UHI5KAOC25XA4KQ" alt="Includes">
+<img src="https://github.com/EdilbertoMG/Hefesto/blob/master/Imagenes/Include.jpg" alt="Includes">
 
 •	Por último, configurar en la grilla el nombre del **Foraneo**.
 
-<img src="https://raw.githubusercontent.com/EdilbertoMG/Hefesto/master/Imagenes/Foraneo.jpg?token=AHN7IGCEVEVU7R4KD7XOWYK5XA45U" alt="Foraneo">
+<img src="https://github.com/EdilbertoMG/Hefesto/blob/master/Imagenes/Foraneo.jpg" alt="Foraneo">
 
 9.	Editar la vista **XXXXXXEdit.cshtml**, hay que tener en cuenta varias cosas:
 
