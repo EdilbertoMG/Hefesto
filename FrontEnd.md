@@ -374,7 +374,39 @@ GO
 
 ```	
 buttonsList,
- languageResource.Language,
- "Production machines"
+languageResource.Language,
+"Production machines"
 ```
 <img src="https://github.com/EdilbertoMG/Hefesto/blob/master/Imagenes/ButtonList.png" alt="Agregar Button List">
+
+•	Agregar una etiqueta **<script type="text/javascript">** el cual se encargará de la apertura de la ventana modal de los datos adjuntos y las variables adicionales.
+
+```
+<script type="text/javascript">
+        function showModalVariables() {
+                loadHefestoAddVariables(
+                        "TipoAsociado",
+                        "@Model.Codigo",
+                        "@ViewBag.EsNuevo",
+                        "",
+                        true,
+                        "40%",
+                        "60%",
+                        "Variables Adicionales"
+                );
+        }
+        function showModalMasterDocuments() {
+                loadHefestoDocumentsMaster(
+                        "TipoAsociado",
+                        "@Model.Codigo",
+                        "",
+                        "@ViewBag.EsNuevo",
+                        "MASTER",
+                        "60%",
+                        "60%",
+                        ""
+                );
+        }
+</script>
+```
+<img src="https://github.com/EdilbertoMG/Hefesto/blob/master/Imagenes/JavaScript.png" alt="JavaScript">
