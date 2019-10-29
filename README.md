@@ -250,4 +250,4 @@ public override List<ProduccionMaquinas> BuscarTodos()
 
 Con todos estos pasaso ya nuestro BackEnd esta listo para hacer las pruebas necesarias.
 
-Puede continuar con el <a href="#">FrontEnd</a>, si no genera documentos, pero si genera documentos de soporte continue con el siguiente <a href="https://github.com/EdilbertoMG/Hefesto/blob/master/BackEndParaDocumentosDeSoporte.md">BackEnd documetos de soporte</a>, pero si su Documentos es de los que generan contabilización continue con el siguiente <a href="#">BackEnd documetos que generan contabilización</a>
+Puede continuar con el <a href="https://github.com/EdilbertoMG/Hefesto/blob/master/FrontEnd.md">FrontEnd</a>, si no genera documentos, pero si genera documentos de soporte continue con el siguiente <a href="https://github.com/EdilbertoMG/Hefesto/blob/master/BackEndParaDocumentosDeSoporte.md">BackEnd documetos de soporte</a>, pero si su Documentos es de los que generan contabilización continue con el siguiente <a href="#">BackEnd documetos que generan contabilización</a>
