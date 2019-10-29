@@ -147,6 +147,7 @@ namespace Zeus.Inventario.BusinessLogic
     }
 }
 ```
+## LLAVE PRIMARIA ES UN IDEN
 10.	Crear una clase parcial dentro de la ruta **Zeus.Inventario.Api\Controllers\Custom** de la entidad que se acaba de generar y agregar un controlador de búsqueda por código.
 Esta búsqueda siempre hará referencia a la llave visual de la entidad en los casos donde la llave primaria es un **Iden**, para aquellos casos donde la llave primaria es la misma llave visual no es necesario crear este código.
 ```
@@ -183,6 +184,7 @@ namespace Zeus.Inventario.Api.Controllers
     }
 }
 ```
+## FORÁNEOS
 11.	Para los foráneos.
 
 •	Primero se debe colocar en comentarios o borrar la propiedad foránea en la entidad **Zeus.Inventario.Infrastructure.Entities** generada por el Smart Code, las imágenes siguientes corresponden al ejemplo tipo de ProduccionMaquinas.
