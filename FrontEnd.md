@@ -82,7 +82,7 @@ public ListaResultado<ProduccionMaquinas> Find(DataSourceLoadOptions loadOptions
                     , loadOptions).ToListaResultado<ProduccionMaquinas>();
         }
 ```
-•	Por último, configurar en la grilla el nombre del **Foraneo** en la vista **xxxxxxxList.cshtml**.
+•	Por último, configurar en la grilla el nombre del **Foraneo** en la vista **XXXXXXList.cshtml**.
 
 ```
 @(Html.Zeus().DataGridBasic<ProduccionMaquinasModel>(actionsList, buttonsList, false, false, @VIEWDET_PANELDETAIL)
@@ -162,3 +162,58 @@ GO
 ``` 
 11.	Si la llave primaria es un **Iden**, para que las búsquedas por código se logren hacer hay agregar al proyecto **Zeus.Inventario.UI.Data\Proxies\Custom** una copia del archivo **NOMBREOBJETOBusinessLogic.cs** y agregar un nuevo método de consulta a la API, este debe coincidir con la ruta que se tuvo que agregar en el Back End, que normalmente se llama **GetByCode**.
 Lo mejor es crear una sobrecarga del **FindById** que existe.
+
+```
+using DevExtreme.AspNet.Mvc;
+using Hefesto.Backend.Core.Utilities;
+using Hefesto.Frontend.Core.HttpClient;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Zeus.Inventario.Infrastructure.Entities;
+
+namespace Zeus.Inventario.UI.Data.Proxies
+{
+    public partial class ProduccionMaquinasBusinessLogic 
+    {
+        public ProduccionMaquinas FindById(string codigo)
+        {
+            return Task.Run(async () => await FindByIdAsync(codigo)).GetAwaiter().GetResult();
+        }
+
+        public async Task<ProduccionMaquinas> FindByIdAsync(string codigo)
+        {
+            var requestUri = string.Concat(serviceAddres, "/api/ProduccionMaquinas/GetByCode?Codigo=" + codigo);
+            var response = await HttpRequestFactory.Get(requestUri, token);
+            return response.ContentAsType<ProduccionMaquinas>();
+        }
+    }
+}
+```
+Esta es la ruta que debe existir en le Back End en la carpeta **Zeus.Inventario.UI.Data/Controllers/Custom**
+```
+using Microsoft.AspNetCore.Mvc;
+using Zeus.Inventario.BusinessLogic.Factories;
+using Zeus.Inventario.Infrastructure.Entities;
+
+
+namespace Zeus.Inventario.Api.Controllers
+{
+	public partial class ProduccionMaquinasController
+    {
+        /// <summary>
+        /// Consulta un registro por su llave visual
+        /// </summary>
+        /// <param name="Codigo"></param>
+        /// <returns>El ProduccionMaquinas</returns>
+        [HttpGet]
+        [Route("GetByCode")]
+        public ProduccionMaquinas GetByCode(string Codigo)
+        {
+                return Manager().ProduccionMaquinasBusinessLogic().BuscarPorId(t => t.Codigo == Codigo);
+        }
+
+    }
+}
+```
