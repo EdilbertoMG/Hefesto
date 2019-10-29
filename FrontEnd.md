@@ -69,7 +69,7 @@ public ListaResultado<ProduccionMaquinas> Find(DataSourceLoadOptions loadOptions
             return response.ContentAsType<ListaResultado<ProduccionMaquinas>>();
         }
 ``` 
-•	Para lograr obtener la información de los foráneos se debe agregar los **Include** correspondientes en el Back End ****.
+•	Para lograr obtener la información de los foráneos se debe agregar los **Include** correspondientes en el Back End **Zeus.Inventario.Api/Controllers**.
 
 ```
 [HttpGet]
