@@ -58,3 +58,56 @@ Algo muy importante es que si se piensa mostrar el nombre de un foráneo en part
 •	Por último, configurar en la grilla el nombre del **Foraneo**.
 
 <img src="https://raw.githubusercontent.com/EdilbertoMG/Hefesto/master/Imagenes/Foraneo.jpg?token=AHN7IGCEVEVU7R4KD7XOWYK5XA45U" alt="Foraneo">
+
+9.	Editar la vista **XXXXXXEdit.cshtml**, hay que tener en cuenta varias cosas:
+
+•	Agregar la siguiente instrucción al principio de la página.
+``` 
+@inject ILanguageResource languageResource
+``` 
+•	Todos los campos del objeto deben tener su correspondiente control en la forma, los que no se mostraran visualmente deben estar representados con el control **@Html.HiddenFor**.
+``` 
+@Html.HiddenFor(m => m.NOMBREDELCAMPO, new { id = ViewBag.PrefixNOMBREOBJETO + "_NOMBREDELCAMPO" }).
+``` 
+•	Para aquellas tablas donde la llave primaria es un **Iden**, se debe eliminar la condición 
+**@if (!Model.EsNuevo){}** pues de todas formas este control no se va a visualizar y de inmediato se debe agregar su correspondiente **@Html.HiddenFor**.
+
+10.	Crear buscador en la base de datos: se debe editar el archivo **z2999999 DatosPorDefault_Hefesto_Buscadores.sql** y agregar el nuevo buscador del objeto creado.
+``` 
+-- ProduccionTipoMaquina
+Execute spSistema_Hefesto @Op = 'ActualizaBuscador',
+@xml = 
+'
+<Buscador>
+	<Codigo>ProduccionTipoMaquina</Codigo>
+	<Nombre>Tipos de máquinas en producción</Nombre>
+	<CampoDevolver>Codigo</CampoDevolver>
+	<SQL>
+		Select  Codigo, 
+			Nombre 
+		From	ProduccionTipoMaquina
+	</SQL>
+	<SqlChoice>
+		Select	ProduccionTipoMaquina.* 
+		From	ProduccionTipoMaquina 
+		Where	Codigo = @CODE
+	</SqlChoice>
+	<Anchos>20,70</Anchos>
+	<Avanzada>
+		<Campo>
+			<Nombre>Codigo</Nombre>
+			<Titulo>Código</Titulo>
+			<Tipo>varchar</Tipo>
+		</Campo>
+		<Campo>
+			<Nombre>Nombre</Nombre>
+			<Titulo>Nombre</Titulo>
+			<Tipo>varchar</Tipo>
+		</Campo>
+	</Avanzada>
+</Buscador>
+'
+GO
+``` 
+11.	Si la llave primaria es un **Iden**, para que las búsquedas por código se logren hacer hay agregar al proyecto **Zeus.Inventario.UI.Data\Proxies\Custom** una copia del archivo **NOMBREOBJETOBusinessLogic.cs** y agregar un nuevo método de consulta a la API, este debe coincidir con la ruta que se tuvo que agregar en el Back End, que normalmente se llama **GetByCode**.
+Lo mejor es crear una sobrecarga del **FindById** que existe.
