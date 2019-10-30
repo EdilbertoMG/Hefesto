@@ -217,7 +217,6 @@ namespace Zeus.Inventario.Api.Controllers
     }
 }
 ```
-
 12.	Si la llave primaria es un **Iden**, también hay agregar al proyecto **Zeus.Inventario.UI.WebApp\Controllers\Custom** una copia del archivo **NOMBREDELOBJETOController.cs** y agregar un nuevo controlador el cual utilizará el nuevo método creado en el proxi **FindById**.
 
 ```
@@ -270,6 +269,7 @@ namespace Zeus.Inventario.UI.Modules.Controllers
     }
 }
 ```
+## Hacer Solo si la llave primaria es un Iden de lo contrario deje el buscador que genera el Smart Code
 
 13.	Agregar control del buscador principal en la vista **NOMBREOBJETOEdit.cshtml**, Se puede hacer manualmente esta operación, pero se recomienda utilizar la siguiente instrucción SQL que ayuda a generarlo de forma automática.
 ```
