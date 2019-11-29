@@ -76,6 +76,16 @@ En tu **Controlador** incia el dato, pudes usar **FindByCode** ó **FindBySp** d
 ```
 Ordenamiento = (List<CombosModel>)Manager().CombosBusinessLogic().FindByCode("AcumuladoDeVentasPorVendedor").ToModels(),
 ```
+En tu **vista** crear el Control Select
+```
+@(Html.Inventario().SelectBox()
+										.DataSource(Model.Ordenamiento)
+										.DisplayExpr("Texto")
+										.ValueExpr("Valor")
+										.ElementAttr(new { paramReport = "Ordenamiento", dxCtrReport = "dxselect" })
+										.Value("Codigo Vendedor")
+										)
+```
 # 2.	RadioGroup
 
 ```
