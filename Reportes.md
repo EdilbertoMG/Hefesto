@@ -34,3 +34,20 @@ Ordenamiento = (List<CombosModel>)Manager().CombosBusinessLogic().FindByCode("Sp
 										       .Layout(Orientation.Horizontal)
 								)
 ```
+3.	**CheckBox**
+
+Se puede usar de esta manera cuando el dato que recibe el FRX es distinto de BIT
+```
+@(Html.DevExtreme().CheckBox()
+									  .Value(false)
+									  .Text("Mostrar Agrupamiento por Bodegas")
+									  .ElementAttr(new
+									  {
+									   paramReport = "MostrarPorBodega",
+									   dxCtrReport = "dxcheckbox",
+									   valTrue = "SI",
+									   valFalse = "NO"
+									  }
+									  )
+								)
+```
