@@ -5,6 +5,7 @@ _Alguno de los Controles mas usados en los reportes_
 ## Controles 🚀
 
 1.	**Select**
+
 En tu **Modelo** crea un dato de tipo List con el nombre que recibira tu FRX
 ```
 public List<CombosModel> Ordenamiento { get; set; }
