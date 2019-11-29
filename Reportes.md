@@ -4,7 +4,7 @@ _Alguno de los Controles mas usados en los reportes_
 
 ## Controles 🚀
 
-1.	**Select**
+# 1.	Select
 
 Si tu **Select** es **estatico** abre el SP: **z2999999 DatosPorDefault_Hefesto_Combos** y crear uno nuevo, donde Codigo representa el codigo unico de de Select, Texto lo visual que se vera y valor sera lo que se envie cuando se seleccione un campo del select
 ```
@@ -76,7 +76,7 @@ En tu **Controlador** incia el dato, pudes usar **FindByCode** ó **FindBySp** d
 ```
 Ordenamiento = (List<CombosModel>)Manager().CombosBusinessLogic().FindByCode("AcumuladoDeVentasPorVendedor").ToModels(),
 ```
-1.	**RadioGroup**
+# 2.	RadioGroup
 
 ```
 @(Html.Inventario().RadioGroup()
@@ -96,7 +96,7 @@ Ordenamiento = (List<CombosModel>)Manager().CombosBusinessLogic().FindByCode("Ac
 										       .Layout(Orientation.Horizontal)
 								)
 ```
-3.	**CheckBox**
+# 3.	CheckBox
 
 Se puede usar de esta manera cuando el dato que recibe el FRX es distinto de BIT, si tu campo es **BIT** debes usar true y false y el FRX lo convertira en 0 ó 1
 ```
