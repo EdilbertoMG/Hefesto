@@ -123,3 +123,20 @@ Se puede usar de esta manera cuando el dato que recibe el FRX es distinto de BIT
 									  )
 								)
 ```
+# 4.	Bloquear un un buscador mediante un CheckBox
+```
+function IncluirConceptosJS(data) {
+		var prefixed = '@ViewBag.PrefixReporteAcumuladoDeVentasVendedor';
+		if (data.value) {
+			$("#" + prefixed + "_ConceptoI").val("").prop("disabled", false).removeClass("readonly");
+			$("#" + prefixed + "_ConceptoF").val("").prop("disabled", false).removeClass("readonly");
+			$("#btnOpenSearcherConceptoI").removeClass("disabled");
+			$("#btnOpenSearcherConceptoF").removeClass("disabled");
+		} else {
+			$("#" + prefixed + "_ConceptoI").val("").prop("disabled", true).addClass("readonly");
+			$("#" + prefixed + "_ConceptoF").val("").prop("disabled", true).addClass("readonly");
+			$("#btnOpenSearcherConceptoI").addClass("disabled");
+			$("#btnOpenSearcherConceptoF").addClass("disabled");
+		}
+	}
+```
