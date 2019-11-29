@@ -36,7 +36,7 @@ Ordenamiento = (List<CombosModel>)Manager().CombosBusinessLogic().FindByCode("Sp
 ```
 3.	**CheckBox**
 
-Se puede usar de esta manera cuando el dato que recibe el FRX es distinto de BIT
+Se puede usar de esta manera cuando el dato que recibe el FRX es distinto de BIT, si tu campo es **BIT** debes usar true y false y el FRX lo convertira en 0 ó 1
 ```
 @(Html.DevExtreme().CheckBox()
 									  .Value(false)
