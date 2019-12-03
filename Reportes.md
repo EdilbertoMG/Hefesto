@@ -140,3 +140,97 @@ function IncluirConceptosJS(data) {
 		}
 	}
 ```
+# 5.	Crear un Buscador con multiples condicionales o filtros o variables
+
+**Paso 1:** Crear un buscador normal en el SP **z2999999 DatosPorDefault_Hefesto_Buscadores**, en nuestro **SQL** creamos el condicional y cada variable a usar se debe colocar como si de una variable de SqlServer se tratara Ej: **@param1**
+```
+-- Documentos
+Execute spSistema_Hefesto @Op = 'ActualizaBuscador',
+@xml = 
+'
+<Buscador>
+	<Codigo>Documentos</Codigo>
+	<Nombre>Documentos</Nombre>
+	<CampoDevolver>Documento</CampoDevolver>
+	<SQL>
+		SELECT Fecha = FECHDCTO, Documento = NUMEDCTO, Descripción = DESCDCTO
+		FROM DOCUMENT 
+		where FNTEDCTO BETWEEN @param1 AND @param2
+	</SQL>
+	<SqlChoice>
+		SELECT	NUMEDCTO
+		FROM	DOCUMENT
+		Where	NUMEDCTO = @CODE
+	</SqlChoice>
+	<Anchos>20,30,50</Anchos>
+	<Avanzada>
+		<Campo>
+			<Nombre>FECHDCTO</Nombre>
+			<Titulo>Fecha</Titulo>
+			<Tipo>varchar</Tipo>
+		</Campo>
+		<Campo>
+			<Nombre>NUMEDCTO</Nombre>
+			<Titulo>Documento</Titulo>
+			<Tipo>varchar</Tipo>
+		</Campo>
+		<Campo>
+			<Nombre>DESCDCTO</Nombre>
+			<Titulo>Descripción</Titulo>
+			<Tipo>varchar</Tipo>
+		</Campo>
+	</Avanzada>
+</Buscador>
+'
+GO
+```
+En nuestro **HTML** Creamos una Lista de tipo AppSearcherAddConditionParams y dentro creamos un Json, donde Name sera el nombre que le pusimos a nuestras variables en el buscador, IdTargetControl puede ir el valor estatico que se usara o se le da el ID del control donde buscara estos datos, TypeField aqui le daremos el tipo de Input que se va a usar para mandar los datos, IsRequired si el condicional es requerido se usa true si es opcional se usa false, UsePrefixed si usamos prefix se le da true en caso contrario false.
+```
+@{ 
+	List<AppSearcherAddConditionParams> searcherAddParams = new List<AppSearcherAddConditionParams>()
+	{
+			new AppSearcherAddConditionParams
+			{
+				Name = "@param1",
+				IdTargetControl = "#FuenteIShowParam",
+				TypeField = AppSearcherTypeField.DevExpressInput,
+				IsRequired = false,
+				UsePrefixed = false
+			},
+			new AppSearcherAddConditionParams
+			{
+				Name = "@param2",
+				IdTargetControl = "#FuenteFShowParam",
+				TypeField = AppSearcherTypeField.DevExpressInput,
+				IsRequired = false,
+				UsePrefixed = false
+			}
+	};
+}
+```
+En nuestro **HTML** dentro del buscador debajo del **funcCallBack** pegamos lo siguiente
+```
+addConditionParams=@searcherAddParams.GetStringAddCondition()
+```
+**Opcional** Por lo general estos buscadores en primera intancia cuando es dinamico dependiendo de otro buscador al no recibir datos siempre tienden a mostrar todos los valores para que esto funcione se debe crear unos valores por defecto en nuestro **HTML**, que por lo general el inicial es vacio y el final **zzzz**
+```
+<input type="hidden" id="FuenteIShowParam" value="" />
+<input type="hidden" id="FuenteFShowParam" value="zzzz" />
+```
+Luego solo tocaria en la funcion javascript que llena los datos que se encuentran en los buscadores darle valores cada vez que se seleccioné un registro.
+```
+// Foraneo FuenteI
+	function getDatosFuenteI(data) {
+		var registro = data.data[0];
+
+		if (data.data[0]) {
+		        $("#FuenteIShow").val(registro.Codigo);
+			$("#FuenteFShow").val(registro.Codigo);
+			$("#FuenteIShowParam").val(registro.Codigo);
+			$("#FuenteFShowParam").val(registro.Codigo);
+		} else {
+			$("#FuenteIShow").val("");
+			$("#FuenteIShowParam").val("");
+		}
+	}
+```
