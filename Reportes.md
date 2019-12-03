@@ -234,7 +234,7 @@ Luego solo tocaria en la funcion javascript que llena los datos que se encuentra
 		}
 	}
 ```
-# 6.	Listas Dinamicas
+# 6.	Listas (Para datos de tipo cadenas separados por ,)
 
 Hacemos todo igual que un Select, hasta que lleguemos a la parte del control **HTML** usamos este:
 ```
@@ -248,4 +248,10 @@ Hacemos todo igual que un Select, hasta que lleguemos a la parte del control **H
 									    .ItemTemplate(@<text><%- Texto %></text>)
 									    .OnSelectionChanged("TiposDeDocumentosJS")
 						)
+```
+Luego Creamos la siguiente funcion JavaScript para recibir los datos y armar la cadena que vamos a enviar 
+```
+function TiposDeDocumentosJS(data) {
+		$("#TiposDocumentos").val(data.component.option("selectedItemKeys").join(","));
+	}
 ```
