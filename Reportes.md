@@ -77,7 +77,7 @@ En tu **Controlador** incia el dato, pudes usar **FindByCode** ó **FindBySp** d
 Ordenamiento = (List<CombosModel>)Manager().CombosBusinessLogic().FindByCode("AcumuladoDeVentasPorVendedor").ToModels(),
 ```
 En tu **vista** crear el Control Select
-```c#
+```cshtml
 @(Html.Inventario().SelectBox()
 										.DataSource(Model.Ordenamiento)
 										.DisplayExpr("Texto")
@@ -88,7 +88,7 @@ En tu **vista** crear el Control Select
 ```
 # 2.	RadioGroup
 
-```c#
+```cshtml
 @(Html.Inventario().RadioGroup()
 										       .ElementAttr(new
 										       {
@@ -109,7 +109,7 @@ En tu **vista** crear el Control Select
 # 3.	CheckBox
 
 Se puede usar de esta manera cuando el dato que recibe el FRX es distinto de BIT, si tu campo es **BIT** debes usar true y false y el FRX lo convertira en 0 ó 1
-```c#
+```cshtml
 @(Html.DevExtreme().CheckBox()
 									  .Value(false)
 									  .Text("Mostrar Agrupamiento por Bodegas")
@@ -209,7 +209,7 @@ En nuestro **HTML** Creamos una Lista de tipo AppSearcherAddConditionParams y de
 }
 ```
 En nuestro **HTML** dentro del buscador debajo del **funcCallBack** pegamos lo siguiente
-```c#
+```cshtml
 addConditionParams=@searcherAddParams.GetStringAddCondition()
 ```
 **Opcional** Por lo general estos buscadores en primera intancia cuando es dinamico dependiendo de otro buscador al no recibir datos siempre tienden a mostrar todos los valores para que esto funcione se debe crear unos valores por defecto en nuestro **HTML**, que por lo general el inicial es vacio y el final **zzzz**
@@ -237,7 +237,7 @@ Luego solo tocaria en la funcion javascript que llena los datos que se encuentra
 # 6.	Listas (Para datos de tipo cadenas separados por ,)
 
 Hacemos todo igual que un Select, hasta que lleguemos a la parte del control **HTML** usamos este:
-```c#
+```cshtml
 <input type="hidden" id="TiposDocumentos" paramReport="TiposDocumentos" />
 						@(Html.DevExtreme().List()
 									    .Height(120)
