@@ -234,3 +234,18 @@ Luego solo tocaria en la funcion javascript que llena los datos que se encuentra
 		}
 	}
 ```
+# 6.	Listas Dinamicas
+
+Hacemos todo igual que un Select, hasta que lleguemos a la parte del control **HTML** usamos este:
+```
+<input type="hidden" id="TiposDocumentos" paramReport="TiposDocumentos" />
+						@(Html.DevExtreme().List()
+									    .Height(120)
+									    .ShowSelectionControls(true)
+									    .SelectionMode(ListSelectionMode.All)
+									    .SelectAllMode(SelectAllMode.AllPages)
+									    .DataSource(Model.TiposDocumentos, "Valor")
+									    .ItemTemplate(@<text><%- Texto %></text>)
+									    .OnSelectionChanged("TiposDeDocumentosJS")
+						)
+```
