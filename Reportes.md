@@ -255,3 +255,7 @@ function TiposDeDocumentosJS(data) {
 		$("#TiposDocumentos").val(data.component.option("selectedItemKeys").join(","));
 	}
 ```
+Si quieres cambiar el nombre de la cabezera usas el siguiente codigo en la funcion **$(document).ready(function () {};**
+```javascript
+$(".dx-list-select-all-label").html("Seleccionar todo");
+```
