@@ -209,7 +209,7 @@ En nuestro **HTML** Creamos una Lista de tipo AppSearcherAddConditionParams y de
 }
 ```
 En nuestro **HTML** dentro del buscador debajo del **funcCallBack** pegamos lo siguiente
-```
+```c#
 addConditionParams=@searcherAddParams.GetStringAddCondition()
 ```
 **Opcional** Por lo general estos buscadores en primera intancia cuando es dinamico dependiendo de otro buscador al no recibir datos siempre tienden a mostrar todos los valores para que esto funcione se debe crear unos valores por defecto en nuestro **HTML**, que por lo general el inicial es vacio y el final **zzzz**
