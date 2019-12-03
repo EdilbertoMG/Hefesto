@@ -55,7 +55,7 @@ Execute spSistema_Hefesto @Op = 'Combo',
 GO
 ```
 Si tu **Select** es **dinamico** abre el SP: **spAPI_Combos** y crea el Select que consulte en la tabla los valores que se deben mostrar
-```
+```sql
 If @Op = 'SpRptImpuestosAsumidos_Movimientos'
 	Begin
 		Set @Sw_EntroOp = 1
@@ -69,15 +69,15 @@ If @Op = 'SpRptImpuestosAsumidos_Movimientos'
 	-------------------------------------------------------------------------------------
 ```
 En tu **Modelo** crea un dato de tipo List con el nombre que recibira tu FRX
-```
+```c#
 public List<CombosModel> Ordenamiento { get; set; }
 ```
 En tu **Controlador** incia el dato, pudes usar **FindByCode** ó **FindBySp** dependiendo si tu Select es estatico usa FindByCode y si es dinamico usa FindBySp
-```
+```c#
 Ordenamiento = (List<CombosModel>)Manager().CombosBusinessLogic().FindByCode("AcumuladoDeVentasPorVendedor").ToModels(),
 ```
 En tu **vista** crear el Control Select
-```
+```c#
 @(Html.Inventario().SelectBox()
 										.DataSource(Model.Ordenamiento)
 										.DisplayExpr("Texto")
@@ -88,7 +88,7 @@ En tu **vista** crear el Control Select
 ```
 # 2.	RadioGroup
 
-```
+```c#
 @(Html.Inventario().RadioGroup()
 										       .ElementAttr(new
 										       {
@@ -109,7 +109,7 @@ En tu **vista** crear el Control Select
 # 3.	CheckBox
 
 Se puede usar de esta manera cuando el dato que recibe el FRX es distinto de BIT, si tu campo es **BIT** debes usar true y false y el FRX lo convertira en 0 ó 1
-```
+```c#
 @(Html.DevExtreme().CheckBox()
 									  .Value(false)
 									  .Text("Mostrar Agrupamiento por Bodegas")
@@ -143,7 +143,7 @@ function IncluirConceptosJS(data) {
 # 5.	Crear un Buscador con multiples condicionales o filtros o variables
 
 **Paso 1:** Crear un buscador normal en el SP **z2999999 DatosPorDefault_Hefesto_Buscadores**, en nuestro **SQL** creamos el condicional y cada variable a usar se debe colocar como si de una variable de SqlServer se tratara Ej: **@param1**
-```
+```sql
 -- Documentos
 Execute spSistema_Hefesto @Op = 'ActualizaBuscador',
 @xml = 
@@ -185,7 +185,7 @@ Execute spSistema_Hefesto @Op = 'ActualizaBuscador',
 GO
 ```
 En nuestro **HTML** Creamos una Lista de tipo AppSearcherAddConditionParams y dentro creamos un Json, donde Name sera el nombre que le pusimos a nuestras variables en el buscador, IdTargetControl puede ir el valor estatico que se usara o se le da el ID del control donde buscara estos datos, TypeField aqui le daremos el tipo de Input que se va a usar para mandar los datos, IsRequired si el condicional es requerido se usa true si es opcional se usa false, UsePrefixed si usamos prefix se le da true en caso contrario false.
-```
+```c#
 @{ 
 	List<AppSearcherAddConditionParams> searcherAddParams = new List<AppSearcherAddConditionParams>()
 	{
@@ -237,7 +237,7 @@ Luego solo tocaria en la funcion javascript que llena los datos que se encuentra
 # 6.	Listas (Para datos de tipo cadenas separados por ,)
 
 Hacemos todo igual que un Select, hasta que lleguemos a la parte del control **HTML** usamos este:
-```
+```c#
 <input type="hidden" id="TiposDocumentos" paramReport="TiposDocumentos" />
 						@(Html.DevExtreme().List()
 									    .Height(120)
