@@ -7,7 +7,7 @@ _Alguno de los Controles mas usados en los reportes_
 # 1.	Select
 
 Si tu **Select** es **estatico** abre el SP: **z2999999 DatosPorDefault_Hefesto_Combos** y crear uno nuevo, donde Codigo representa el codigo unico de de Select, Texto lo visual que se vera y valor sera lo que se envie cuando se seleccione un campo del select
-```
+```sql
 -- Acumulado de Ventas por Vendedor - odenamiento.
 Execute spSistema_Hefesto @Op = 'Combo',
 @xml = 
