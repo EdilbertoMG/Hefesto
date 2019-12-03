@@ -185,7 +185,7 @@ Execute spSistema_Hefesto @Op = 'ActualizaBuscador',
 GO
 ```
 En nuestro **HTML** Creamos una Lista de tipo AppSearcherAddConditionParams y dentro creamos un Json, donde Name sera el nombre que le pusimos a nuestras variables en el buscador, IdTargetControl puede ir el valor estatico que se usara o se le da el ID del control donde buscara estos datos, TypeField aqui le daremos el tipo de Input que se va a usar para mandar los datos, IsRequired si el condicional es requerido se usa true si es opcional se usa false, UsePrefixed si usamos prefix se le da true en caso contrario false.
-```c#
+```cshtml
 @{ 
 	List<AppSearcherAddConditionParams> searcherAddParams = new List<AppSearcherAddConditionParams>()
 	{
