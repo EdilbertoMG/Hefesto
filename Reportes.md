@@ -255,6 +255,15 @@ function TiposDeDocumentosJS(data) {
 		$("#TiposDocumentos").val(data.component.option("selectedItemKeys").join(","));
 	}
 ```
+**Opcional** En la funcion **validateReport()** valida que la cadena no se vaya vacia 
+```javascript
+let = TiposDocumentos = $("#TiposDocumentos").val();
+
+if (TiposDocumentos == "") {
+			DevExpress.ui.notify("Seleccione al menos un Documento", "error", 2000);
+			return false
+		}
+```
 Si quieres cambiar el nombre de la cabezera usas el siguiente codigo en la funcion **$(document).ready(function () {};**
 ```javascript
 $(".dx-list-select-all-label").html("Seleccionar todo");
