@@ -331,7 +331,36 @@ En caso de que el buscador no tenga valor o el valor no este exista en la tabla 
 		}
 	}
 ```
-En nuestra funcion **$(document).ready(function ()** iniciamos la funcion que llama nuestro buscador al momento de obteber un dato y le mandamos un datos vacio para que asi entre en el else y cree el select vacio por cuestiones esteticas
-```
+3. En nuestra funcion **$(document).ready(function ()** iniciamos la funcion que llama nuestro buscador al momento de obteber un dato y le mandamos un datos vacio para que asi entre en el else y cree el select vacio por cuestiones esteticas
+```javascript
 getDatosFuente($(""));
+```
+4. En el SP: **spAPI_Combos**. creamos nuestro sentencia normal de un Select pero para que use parametros **adiccionales** debemos recibir un String y conventirlo en XML y sacamos nuestra variable para poder filtrar en este caso **@Fuente**
+```sp
+If @Op = 'FUENTE_SERIE'
+	Begin
+		Set @Sw_EntroOp = 1
+		 
+		Declare @vXML   XML
+		Declare @Fuente Char(2)
+		Declare @IdDoc  Int
+
+		Set @vXML = @parametros
+
+		Execute sp_xml_preparedocument @IdDoc OUTPUT, @vXML
+
+		select @Fuente = fuente
+		From OpenXml (@IdDoc, '/parametros')
+		With (
+				fuente varchar (50) 'fuente '
+		)
+
+		SELECT	Codigo = Cast('FUENTE_SERIE' As varchar(50)),
+				Texto = Cast(NUMCONS.INICIO As Varchar(200)),
+				Valor = Cast(NUMCONS.INICIO As Varchar(200))
+		From	NUMCONS 
+		WHERE	IDFUENTE = @Fuente
+		Order By INICIO
+
+	End
 ```
