@@ -364,3 +364,61 @@ If @Op = 'FUENTE_SERIE'
 
 	End
 ```
+# 6.	Lista que crea un XML 
+
+Hacemos todos los pasos igual que un **Select** hasta llegar al controlador html y hacemos lo siguiente.
+
+Creamos **2 input ocultos**, uno para llenar la cadena y otro para enviar el **XML**, asiganamos una funcion **OnSelectionChanged**
+```cshtml
+<input type="hidden" id="Meses" paramReport="Meses" value="" />
+<input type="hidden" id="Cadena" />
+								@(Html.DevExtreme().List()
+											    .Height(480)
+											    .ShowSelectionControls(true)
+											    .SelectionMode(ListSelectionMode.Multiple)
+											    .DataSource(Model.Meses, "Valor")
+											    .ItemTemplate(@<text><%- Texto %></text>)
+											    .OnSelectionChanged("MesesJS")
+								)
+```
+Iniciamos la funcion **MesesJS** para que guarde todos los campos que se seleccionen separador por,
+```
+function MesesJS(data) {
+		$("#Cadena").val(data.component.option("selectedItemKeys").join(","));
+	}
+```
+En la funcion **validateReport()** hacemos lo siguiente, traemos los valores que tenga la cadena en ese momento, si esta vacio envia nuestro valos Meses vacia en mi caso, si este no es tu caso haz la validacion correspondiente, si hay valor entonces se hace una funcion 
+que recibe 2 parametros **cadenaADividir** y **separador**,
+en la variable **arrayDeCadenas** unamos la funcion **split** que nos permite dividir una cadena cada vez que encuentre el valor que asisgnemos en este caso , creamos una variable , con la parte inicial de nuestro **XML** y luego en un **for** vamos agregando la demas ectrucutra, por ultimo asignamos esta **XML** en formato cadena a nuestro campo oculto para que asi se envie.
+```
+var cadenaMeses = $("#Cadena").val();
+
+		if (cadenaMeses == "") {
+
+			$("#Meses").val("");
+
+		} else {
+
+			function dividirCadena(cadenaADividir, separador) {
+
+				var arrayDeCadenas = cadenaADividir.split(separador);
+
+				var cadena;
+				var cadenaFinal = "<tabla><Mes Numeric>";
+
+				for (var i = 0; i < arrayDeCadenas.length; i++) {
+
+					cadena = "<fila><&" + arrayDeCadenas[i] + "&>";
+					//alert(cadena);
+					cadenaFinal = cadenaFinal + cadena;
+
+				}
+				//alert(cadenaFinal);
+				$("#Meses").val(cadenaFinal);
+			}
+
+			var coma = ",";
+
+			dividirCadena(cadenaMeses, coma);
+		}
+```
