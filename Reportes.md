@@ -268,3 +268,70 @@ Si quieres cambiar el nombre de la cabezera usas el siguiente codigo en la funci
 ```javascript
 $(".dx-list-select-all-label").html("Seleccionar todo");
 ```
+# 6.	Select que se filtra apartir de un buscador 
+
+Dentro de nuesto **HTML** creamos un un **div** y le damos un **id**, en este div es donde se creara el select.
+```cshtml
+<div class="form-group">
+								<div class="md-form">
+									<input type="hidden" id="Oculto" value="0" />
+									<div id="Serie"></div>
+								</div>
+							</div>
+```
+1. En la funcion que llama nuestro buscador al momento de obteber un dato, creamos nuestro **Select** con **Jquery** y **devexpress**, donde el **if** cuando existan datos validos se creara un **Json** que llamaremos **parametros** en el crearemos todos los parametros necesarios.
+
+2. Usamos Jquery para seleccionar el **div** que creamos con el **id** que se le puso en este caso **Serie** creamos un control **dxSelectBox** donde **operation** sera el nombre que le daremos a nuestro **OP** en el SP: **spAPI_Combos**.
+En **parametros** haremos que nuestro Json se convierta en un Json String ya que asi lo recibe la **Api** usamos el **JSON.stringify**
+
+En caso de que el buscador no tenga valor o el valor no este exista en la tabla que el apunta, se creara un buscador sin datos normal por cuestiones esteticas.
+```javascript
+// Foraneo Fuente
+	function getDatosFuente(data) {
+		var registro = data.data[0];
+
+		if (data.data[0]) {
+			$("#FuenteShow").val(registro.Codigo);
+			$("#Oculto").val("1");
+
+			var parametros = {
+				"fuente": registro.Codigo
+			};
+			
+			$("#Serie").dxSelectBox({
+				"name": "ReporteListadoDeAuditoriaDeConsecutivoContables.Serie",
+				"value": "",
+				"dataSource": {
+					"store": DevExpress.data.AspNet.createStore({
+						"loadParams": {
+							"operation": "FUENTE_SERIE", "parametros": JSON.stringify(parametros)
+						},
+						"loadUrl": "/Combos/GetBySp"
+					})
+				},
+				"showClearButton": false,
+				"displayExpr": "Texto",
+				"valueExpr": "Valor",
+				"inputAttr": { "id": "ReporteListadoDeAuditoriaDeConsecutivoContables_Serie", "paramReport": "Serie" },
+				"placeholder": "Elegir Serie",
+				"disabled": false
+			});
+		} else {
+			$("#FuenteShow").val("");
+			$("#Oculto").val("0");
+
+			$("#Serie").dxSelectBox({
+				"name": "ReporteListadoDeAuditoriaDeConsecutivoContables.Serie",
+				"value": "",
+				"showClearButton": false,
+				"placeholder": "Elegir Serie",
+				"inputAttr": { "id": "ReporteListadoDeAuditoriaDeConsecutivoContables_Serie", "paramReport": "Serie" },
+				"disabled": true
+			});
+		}
+	}
+```
+En nuestra funcion **$(document).ready(function ()** iniciamos la funcion que llama nuestro buscador al momento de obteber un dato y le mandamos un datos vacio para que asi entre en el else y cree el select vacio por cuestiones esteticas
+```
+getDatosFuente($(""));
+```
