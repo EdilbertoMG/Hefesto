@@ -279,7 +279,7 @@ Dentro de nuesto **HTML** creamos un un **div** y le damos un **id**, en este di
 								</div>
 							</div>
 ```
-1. En la funcion que llama nuestro buscador al momento de obteber un dato, creamos nuestro **Select** con **Jquery** y **devexpress**, donde el **if** cuando existan datos validos se creara un **Json** que llamaremos **parametros** en el crearemos todos los parametros necesarios.
+1. En la funcion que llama nuestro buscador al momento de obteber un dato, creamos nuestro **Select** con **Jquery** y **devexpress**, donde el **if** cuando existan datos validos se creara un **Json** que llamaremos **parametros** en el crearemos todos los parametros necesarios y le damos el valor que necesite en este caso el valor que traiga el buscador.
 
 2. Usamos Jquery para seleccionar el **div** que creamos con el **id** que se le puso en este caso **Serie** creamos un control **dxSelectBox** donde **operation** sera el nombre que le daremos a nuestro **OP** en el SP: **spAPI_Combos**.
 En **parametros** haremos que nuestro Json se convierta en un Json String ya que asi lo recibe la **Api** usamos el **JSON.stringify**
