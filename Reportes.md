@@ -422,3 +422,8 @@ var cadenaMeses = $("#Cadena").val();
 			dividirCadena(cadenaMeses, coma);
 		}
 ```
+# 7.	Obtener Valor de un Checkbox si esta chequeado o no, Obtener Valor de un RadioGroup
+```js
+let ArtCheck = $("#Articulo").dxCheckBox("instance").option("value");
+let CampoAMostrardxRadio = $("#CampoAMostrardxRadio").dxRadioGroup("instance").option("value");
+```
