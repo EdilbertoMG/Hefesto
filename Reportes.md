@@ -443,7 +443,7 @@ let CampoAMostrardxRadio = $("#CampoAMostrardxRadio").dxRadioGroup("instance").o
 	}
 ```
 # 8.	Select que Bloquea se bloquea cuando se usa y activa un buscador 
-```
+```js
 function Grupos(data) {
 
 		let ID = data.element[0].id;
