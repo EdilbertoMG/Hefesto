@@ -427,7 +427,7 @@ var cadenaMeses = $("#Cadena").val();
 let ArtCheck = $("#Articulo").dxCheckBox("instance").option("value");
 let CampoAMostrardxRadio = $("#CampoAMostrardxRadio").dxRadioGroup("instance").option("value");
 ```
-# 7.	Javascript Buscadores para manejar multiples buscadores desde una sola función
+# 8.	Javascript Buscadores para manejar multiples buscadores desde una sola función
 ```js
 // Foraneos
 	function getDatosBuscador(data, codevalue, textboxF4) {
@@ -439,6 +439,101 @@ let CampoAMostrardxRadio = $("#CampoAMostrardxRadio").dxRadioGroup("instance").o
 			$("#" + IdDelTextAsociado).val(registro.Codigo);
 		} else {
 			$("#" + IdDelTextAsociado).val("");
+		}
+	}
+```
+# 8.	Select que Bloquea se bloquea cuando se usa y activa un buscador 
+```
+function Grupos(data) {
+
+		let ID = data.element[0].id;
+		let IDH = ID.replace("Select", "");
+		let valorSelec = data.value;
+
+		if (valorSelec == "ZONA") {
+
+			if (!$("#ZonaIShow").prop("disabled")) {
+				DevExpress.ui.notify("Zona ya fue seleccionada utilice otro", "warning", 2000);
+			} else {
+				$("#ZonaIShow").val("").prop("disabled", false).removeClass("readonly");
+				$("#btnOpenSearcherZonaI").removeClass("disabled");
+				$("#ZonaFShow").val("").prop("disabled", false).removeClass("readonly");
+				$("#btnOpenSearcherZonaF").removeClass("disabled");
+
+				$("#" + ID).dxSelectBox({ "disabled": true })
+				$("#" + IDH).val(valorSelec)
+			}
+
+		} else if (valorSelec == "TERCERO") {
+
+			if (!$("#TerceroIShow").prop("disabled")) {
+				DevExpress.ui.notify("Tercero ya fue seleccionada utilice otro", "warning", 2000);
+			} else {
+				$("#TerceroIShow").val("").prop("disabled", false).removeClass("readonly");
+				$("#btnOpenSearcherTerceroI").removeClass("disabled");
+				$("#TerceroFShow").val("").prop("disabled", false).removeClass("readonly");
+				$("#btnOpenSearcherTerceroF").removeClass("disabled");
+
+				$("#" + ID).dxSelectBox({ "disabled": true })
+				$("#" + IDH).val(valorSelec)
+			}
+
+		} else if (valorSelec == "CLIENTE") {
+
+			if (!$("#ClienteIShow").prop("disabled")) {
+				DevExpress.ui.notify("Cliente ya fue seleccionada utilice otro", "warning", 2000);
+			} else {
+				$("#ClienteIShow").val("").prop("disabled", false).removeClass("readonly");
+				$("#btnOpenSearcherClienteI").removeClass("disabled");
+				$("#ClienteFShow").val("").prop("disabled", false).removeClass("readonly");
+				$("#btnOpenSearcherClienteF").removeClass("disabled");
+
+				$("#" + ID).dxSelectBox({ "disabled": true })
+				$("#" + IDH).val(valorSelec)
+			}
+
+		} else if (valorSelec == "VENDEDOR") {
+
+			if (!$("#VendedorIShow").prop("disabled")) {
+				DevExpress.ui.notify("Vendedor ya fue seleccionada utilice otro", "warning", 2000);
+			} else {
+				$("#VendedorIShow").val("").prop("disabled", false).removeClass("readonly");
+				$("#btnOpenSearcherVendedorI").removeClass("disabled");
+				$("#VendedorFShow").val("").prop("disabled", false).removeClass("readonly");
+				$("#btnOpenSearcherVendedorF").removeClass("disabled");
+
+				$("#" + ID).dxSelectBox({ "disabled": true })
+				$("#" + IDH).val(valorSelec)
+			}
+
+		} else if (valorSelec == "TIPO CLIENTE") {
+
+			if (!$("#TipoClienteIShow").prop("disabled")) {
+				DevExpress.ui.notify("Tipo Cliente ya fue seleccionada utilice otro", "warning", 2000);
+			} else {
+				$("#TipoClienteIShow").val("").prop("disabled", false).removeClass("readonly");
+				$("#btnOpenSearcherTipoClienteI").removeClass("disabled");
+				$("#TipoClienteFShow").val("").prop("disabled", false).removeClass("readonly");
+				$("#btnOpenSearcherTipoClienteF").removeClass("disabled");
+
+				$("#" + ID).dxSelectBox({ "disabled": true })
+				$("#" + IDH).val(valorSelec)
+			}
+
+		} else if (valorSelec == "SEGMENTO") {
+
+			if (!$("#SegmentoIShow").prop("disabled")) {
+				DevExpress.ui.notify("Segmento ya fue seleccionada utilice otro", "warning", 2000);
+			} else {
+				$("#SegmentoIShow").val("").prop("disabled", false).removeClass("readonly");
+				$("#btnOpenSearcherSegmentoI").removeClass("disabled");
+				$("#SegmentoFShow").val("").prop("disabled", false).removeClass("readonly");
+				$("#btnOpenSearcherSegmentoF").removeClass("disabled");
+
+				$("#" + ID).dxSelectBox({ "disabled": true })
+				$("#" + IDH).val(valorSelec)
+			}
+
 		}
 	}
 ```
