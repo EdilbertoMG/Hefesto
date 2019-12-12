@@ -427,3 +427,18 @@ var cadenaMeses = $("#Cadena").val();
 let ArtCheck = $("#Articulo").dxCheckBox("instance").option("value");
 let CampoAMostrardxRadio = $("#CampoAMostrardxRadio").dxRadioGroup("instance").option("value");
 ```
+# 7.	Javascript Buscadores para manejar multiples buscadores desde una sola función
+```js
+// Foraneos
+	function getDatosBuscador(data, codevalue, textboxF4) {
+
+		var registro = data.data[0];
+		var IdDelTextAsociado = textboxF4;
+
+		if (data.data[0]) {
+			$("#" + IdDelTextAsociado).val(registro.Codigo);
+		} else {
+			$("#" + IdDelTextAsociado).val("");
+		}
+	}
+```
