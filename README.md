@@ -12,17 +12,17 @@ _Después de generar los archivos en el Smart Code se deben copiar los archivos 
 
 4.	Editar el archivo **Zeus.Inventario.Infrastructure\Factories\ZeusContextoDB.cs**, ir al final del archivo y asegurarse de crear las líneas de código correspondientes a la tabla en cuestión.
 Declarar:
-```
+```c#
 public DbSet<Colores> Colores { get; set; }
 ```
 Y en el método **OnModelCreating** y agregar una nueva línea correspondiente a la tabla en cuestión:
-```
+```c#
 modelBuilder.ApplyConfiguration(new ColoresMap());
 ```
 5.	Ir a la carpeta generada por Smart Code **BussinessLogic** y copiar el archivo en la raíz del proyecto **Zeus.Inventario.BusinessLogic**
 
 6.	Editar el archivo **Zeus.Inventario.BusinessLogic\Factories\BussinesLogicExtensions.cs**, ir al final del archivo y asegurarse de crear las líneas de código correspondientes a la tabla en cuestión.
-```
+```c#
 public static ColoresBusinessLogic ColoresBusinessLogic(this LogicaNegocio logic)
         {
                 return new ColoresBusinessLogic(logic.settings);
@@ -31,7 +31,7 @@ public static ColoresBusinessLogic ColoresBusinessLogic(this LogicaNegocio logic
 7.	Ir a la carpeta generada por Smart Code **Controllers** y copiar en la siguiente ruta: **Zeus.Inventario.Api\ Controllers**, cabe aclarar que las modificaciones personalizadas de estos objetos se realizarán en la carpeta **Custom**.
 
 Con lo anterior ya se podrían hacer pruebas de la Api, no sin antes se tenga actualizadas las estructuras de la seguridad de .Net, como también los datos de conexión del archivo: **Zeus.Inventario.Api\wwwroot\data\AppConfig.json**
-```
+```c#
 [
         {
                 "ActivarMultiplsResultSets": true,
@@ -51,7 +51,7 @@ Con lo anterior ya se podrían hacer pruebas de la Api, no sin antes se tenga ac
 ]
 ```
 8.	Crear una clase parcial dentro de la ruta **Zeus.Inventario.Infrastructure.Entities\Custom** de la entidad que se acaba de generar y agregar el método **ToXML()**
-```
+```c#
 using System;
 using System.IO;
 using System.Xml;
@@ -91,7 +91,7 @@ namespace Zeus.Inventario.Infrastructure.Entities
 ```
 9.	Crear una clase parcial dentro de la ruta **Zeus.Inventario.BusinessLogic\Custom** de la entidad que se acaba de generar y sobrescribir los métodos: **Adicionar(), Modificar(), Eliminar(), ExecuteProcedure()**
 Importante aclarar que ya se debe tener claro cuál es el **Iden** del spwsg asignado que en el ejemplo siguiente es el **153**
-```
+```c#
 using Hefesto.Backend.Core.Data;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -150,7 +150,7 @@ namespace Zeus.Inventario.BusinessLogic
 ## SI LA LLAVE PRIMARIA ES UN IDEN
 10.	Crear una clase parcial dentro de la ruta **Zeus.Inventario.Api\Controllers\Custom** de la entidad que se acaba de generar y agregar un controlador de búsqueda por código.
 Esta búsqueda siempre hará referencia a la llave visual de la entidad en los casos donde la llave primaria es un **Iden**, para aquellos casos donde la llave primaria es la misma llave visual no es necesario crear este código.
-```
+```c#
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Data.ResponseModel;
 using DevExtreme.AspNet.Mvc;
@@ -188,27 +188,27 @@ namespace Zeus.Inventario.Api.Controllers
 11.	Para los foráneos.
 
 •	Primero se debe colocar en comentarios o borrar la propiedad foránea en la entidad **Zeus.Inventario.Infrastructure.Entities** generada por el Smart Code, las imágenes siguientes corresponden al ejemplo tipo de ProduccionMaquinas.
-```
+```c#
        //[RecursoDisplayName("ProduccionMaquinas.IdenProducciontipomaquina")]
        //[Column("IDEN_PRODUCCIONTIPOMAQUINA")]
        //[Required(AllowEmptyStrings = false, ErrorMessage = "El campo Tipo de Máquina es requerido")]
        //public virtual Decimal IdenProducciontipomaquina { get; set; }
 ```
 •	En la entidad **Custom** se declara una propiedad del tipo del objeto foráneo.
-```
+```c#
 [XmlIgnore]
                 [ForeignKey("IdenProduccionTipoMaquina")]
                 public virtual ProduccionTipoMaquina ProduccionTipoMaquina { get; set; }
 ```
 •	Luego se debe declarar la propiedad de la siguiente forma.
-```
+```c#
 [RecursoDisplayName("ProduccionMaquinas.IdenProduccionTipoMaquina")]
                 [Column("IDEN_PRODUCCIONTIPOMAQUINA")]
                 [Required(AllowEmptyStrings = false, ErrorMessage = "El campo Tipo de Máquina es requerido")]
                 public virtual decimal IdenProduccionTipoMaquina { get; set; }
 ```
 •	Inicializar este objeto en el constructor de la entidad:
-```                
+```c#                
                 public ProduccionMaquinas()
                 {
                         this.ProduccionTipoMaquina = new ProduccionTipoMaquina();
@@ -216,17 +216,17 @@ namespace Zeus.Inventario.Api.Controllers
 ```
 •	Para el caso de Foraneos opcionales y campos numéricos, debemos crear una propiedad Boleana con el prefijo **ShouldSerialize** para que al convertir el objeto a XML el nodo del Foraneo no viaje.  
 Esto lo puede generar automáticamente:
-```
+```c#
 public bool ShouldSerializeCantidadJuguetes()
         {
             return CantidadJuguetes.HasValue;
         }
 ```        
-```
+```c#
 Execute spSistema_Hefesto 'ShouldSerialize', 'TABLA'
 ```
 •	Luego en la carpeta **Zeus.Inventario.BusinessLogic** el archivo **XXXXXBusinessLogic** del **Custom** se debe sobrescribir el método **BuscarPorId()**, esto para personalizar los datos que serán consultados juntos con sus foraneos.
-```
+```c#
 public override ProduccionMaquinas BuscarPorId(Expression<Func<ProduccionMaquinas, bool>> predicate)
         {
                 ProduccionMaquinas ProduccionMaquinas = (UnidadTrabajo.Session as ZeusContextoDB)
@@ -238,7 +238,7 @@ public override ProduccionMaquinas BuscarPorId(Expression<Func<ProduccionMaquina
         }
 ```   
 •	Y Tambien se crear el método **BuscarTodos()**, esto es solo si tienes uno o mas foraneo.
-```
+```c#
 public override List<ProduccionMaquinas> BuscarTodos()
         {
                 return Tabla()
