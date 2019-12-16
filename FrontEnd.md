@@ -9,7 +9,7 @@ _Después de generar el Back End se deben copiar los archivos en este orden_
 3.	Ir a la carpeta generada por Smart Code **Proxies** y copiar el archivo en la siguiente ruta **Zeus.Inventario.UI.Data\Proxies** , cualquier cambio en este archivo debe hacerse en la carpeta **Custom**.
 
 4.	Editar el archivo **Zeus.Inventario.UI.Data\Factories\ZeusProxyBusinessLogicExtentions.cs**, ir al final del archivo y asegurarse de crear las líneas de código correspondientes a la tabla en cuestión.
-```
+```c#
         public static ColoresBusinessLogic ColoresBusinessLogic(this ProxyLogicaNegocio proxy)
         {
                 return new ColoresBusinessLogic(proxy.ServiceAddresUnkown, proxy.Token);
@@ -21,7 +21,7 @@ _Después de generar el Back End se deben copiar los archivos en este orden_
 
 7.	Editar el archivo **../wwwroot/data/AppMenu.json** Agregar la opción de menú.
 Importante es que estas opciones de menú se les configura el controlador y la acción, para los maestros y los documentos la acción será **List**, que corresponden a la ventana principal que muestra una cuadricula.
-```  
+```js
 {
                                 "Name": "Configuración de datos específicos",
                                 "NameEn": "Specific data settings",
@@ -46,7 +46,7 @@ Importante es que estas opciones de menú se les configura el controlador y la a
 Algo muy importante es que si se piensa mostrar el nombre de un foráneo en particular hay que hacer lo siguiente: 
 •	El control **Html.Zeus().DataGridBasi** apunta al controlador GET del objeto de **Inventario.UI.Modules.Controllers**.
 
-``` 
+```c#
  [HttpGet]
                 public LoadResult Get(DataSourceLoadOptions loadOptions)
                 {
@@ -55,7 +55,7 @@ Algo muy importante es que si se piensa mostrar el nombre de un foráneo en part
 ``` 
 
 •	Este a su vez llama al proxi del objeto en el método **Find** el cual se comunica con la API en la ruta **GetByOptions** dentro de **Inventario.UI.Data.Proxies**.
-``` 
+```c#
 public ListaResultado<ProduccionMaquinas> Find(DataSourceLoadOptions loadOptions)
         {
             return Task.Run(async () => await FindAsync(loadOptions)).GetAwaiter().GetResult();
@@ -71,7 +71,7 @@ public ListaResultado<ProduccionMaquinas> Find(DataSourceLoadOptions loadOptions
 ``` 
 •	Para lograr obtener la información de los foráneos se debe agregar los **Include** correspondientes en el Back End **Zeus.Inventario.Api/Controllers**.
 
-```
+```c#
 [HttpGet]
         [Route("GetByOptions")]
         public ListaResultado<ProduccionMaquinas> GetByOptions(string options)
@@ -84,7 +84,7 @@ public ListaResultado<ProduccionMaquinas> Find(DataSourceLoadOptions loadOptions
 ```
 •	Por último, configurar en la grilla el nombre del **Foraneo** en la vista **XXXXXXList.cshtml**.
 
-```
+```cshtml
 @(Html.Zeus().DataGridBasic<ProduccionMaquinasModel>(actionsList, buttonsList, false, false, @VIEWDET_PANELDETAIL)
 												.ID("ProduccionMaquinasModel_grid")
 												.DataSource(d => d.Mvc().Area("").Controller("ProduccionMaquinas").LoadAction("Get").Key("Iden")
@@ -113,18 +113,18 @@ public ListaResultado<ProduccionMaquinas> Find(DataSourceLoadOptions loadOptions
 9.	Editar la vista **XXXXXXEdit.cshtml**, hay que tener en cuenta varias cosas:
 
 •	Agregar la siguiente instrucción al principio de la página.
-``` 
+``` cshtml
 @inject ILanguageResource languageResource
 ``` 
 •	Todos los campos del objeto deben tener su correspondiente control en la forma, los que no se mostraran visualmente deben estar representados con el control **@Html.HiddenFor**.
-``` 
+```cshtml
 @Html.HiddenFor(m => m.NOMBREDELCAMPO, new { id = ViewBag.PrefixNOMBREOBJETO + "_NOMBREDELCAMPO" }).
 ``` 
 •	Para aquellas tablas donde la llave primaria es un **Iden**, se debe eliminar la condición 
 **@if (!Model.EsNuevo){}** pues de todas formas este control no se va a visualizar y de inmediato se debe agregar su correspondiente **@Html.HiddenFor**.
 
 10.	Crear buscador en la base de datos: se debe editar el archivo **z2999999 DatosPorDefault_Hefesto_Buscadores.sql** y agregar el nuevo buscador del objeto creado.
-``` 
+```sql
 -- ProduccionTipoMaquina
 Execute spSistema_Hefesto @Op = 'ActualizaBuscador',
 @xml = 
@@ -163,7 +163,7 @@ GO
 11.	Si la llave primaria es un **Iden**, para que las búsquedas por código se logren hacer hay agregar al proyecto **Zeus.Inventario.UI.Data\Proxies\Custom** una copia del archivo **NOMBREOBJETOBusinessLogic.cs** y agregar un nuevo método de consulta a la API, este debe coincidir con la ruta que se tuvo que agregar en el Back End, que normalmente se llama **GetByCode**.
 Lo mejor es crear una sobrecarga del **FindById** que existe.
 
-```
+```c#
 using DevExtreme.AspNet.Mvc;
 using Hefesto.Backend.Core.Utilities;
 using Hefesto.Frontend.Core.HttpClient;
@@ -192,7 +192,7 @@ namespace Zeus.Inventario.UI.Data.Proxies
 }
 ```
 Esta es la ruta que debe existir en el Back End en la carpeta **Zeus.Inventario.UI.Data/Controllers/Custom**
-```
+```c#
 using Microsoft.AspNetCore.Mvc;
 using Zeus.Inventario.BusinessLogic.Factories;
 using Zeus.Inventario.Infrastructure.Entities;
@@ -219,7 +219,7 @@ namespace Zeus.Inventario.Api.Controllers
 ```
 12.	Si la llave primaria es un **Iden**, también hay agregar al proyecto **Zeus.Inventario.UI.WebApp\Controllers\Custom** una copia del archivo **NOMBREDELOBJETOController.cs** y agregar un nuevo controlador el cual utilizará el nuevo método creado en el proxi **FindById**.
 
-```
+```c#
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Data.ResponseModel;
 using DevExtreme.AspNet.Mvc;
@@ -272,11 +272,11 @@ namespace Zeus.Inventario.UI.Modules.Controllers
 ## Hacer Solo si la llave primaria es un Iden de lo contrario deje el buscador que genera el Smart Code
 
 13.	Agregar control del buscador principal en la vista **NOMBREOBJETOEdit.cshtml**, Se puede hacer manualmente esta operación, pero se recomienda utilizar la siguiente instrucción SQL que ayuda a generarlo de forma automática.
-```
+```sql
 Execute spSistema_Hefesto @Op= 'BuscadorPrincipal', @Tabla = 'TipoAsociado', @LLaveLogica = 'Codigo', @SiguienteCampo = 'Nombre'
 ```
 Dando como resultado algo como esto:
-```
+```cshtml
 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 ">
                                 <div class="form-group">
                                         <label for=@(ViewBag.PrefixTipoAsociado + "_Codigo")>
@@ -314,7 +314,7 @@ Hasta este punto ya debe mostrar en el menú y el buscador principal debe funcio
 Se debe primero identificar si existe un código en la tabla **VariableDefinicionMaestro** que corresponda con el objeto que se está creando, esto con el objetivo que tanto para las variables adicionales como para los adjuntos se maneje el mismo código, posteriormente agregar la información correspondiente al objeto en cuestión.  **OJO** si existe ya el registro en el estándar, hay que respetar el existente y hacer que coincidan el campo **Tabla** de la tabla **VariableDefinicionMaestro** y el campo **ds_nombre** de la tabla **SYS_ENTIDADES**.
 Tener en cuenta que el campo **id** de la tabla **SYS_ENTIDADES** se debe incrementar cada vez que se agregue uno nuevo.
 
-```
+```sql
 ---------------------------------------------------------------------------------------------------
 ----------------------------------- ProduccionTipoMaquina
 ---------------------------------------------------------------------------------------------------
@@ -345,12 +345,12 @@ GO
 
 •	Editar la vista **_NOMBREOBJETOEdit.cshtml**.
 •	Agregar la siguiente instrucción al principio de la página.
-```
+```cshtml
 @inject ILanguageResource languageResource
 ```
 •	Agregar una lista de botones con el nombre **buttonsList** la cual será adicionada a los botones de la barra de la vista.
 
-```
+```cshtmal
 @{
         List<object> buttonsList = new List<object>
 {
@@ -372,7 +372,7 @@ GO
 
 •	Agregue a la barra la lista de botones **buttonsList**, **languageResource.Language** y un título en ingles de la vista.
 
-```	
+```cshtmal	
 buttonsList,
 languageResource.Language,
 "Production machines"
@@ -381,7 +381,7 @@ languageResource.Language,
 
 •	Agregar una etiqueta **<script type="text/javascript">** el cual se encargará de la apertura de la ventana modal de los datos adjuntos y las variables adicionales.
 
-```
+```js
 <script type="text/javascript">
         function showModalVariables() {
                 loadHefestoAddVariables(
@@ -416,7 +416,7 @@ languageResource.Language,
 
 •	Abrir el Back End y buscar en la ruta **PUT** (actualizar) y garantizar que se asigne el objeto de navegación esta en **Zeus.Inventario.Api/Controllers**.
 
-```
+```c#
 /// <summary>
         /// Modifica un registro
         /// </summary>
@@ -455,7 +455,7 @@ languageResource.Language,
 
 •	Editar El archivo del Front End **XXXXXXModel.cs** y asignar los objetos de navegación dentro de la carpeta **Zeus.Inventario.UI/Models**.
 
-```
+```c#
 public static ProduccionMaquinasModel ToModel(this ProduccionMaquinas entity)
 		{
 			if (entity == null)
