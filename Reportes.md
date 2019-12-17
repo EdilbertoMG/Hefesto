@@ -537,3 +537,27 @@ function Grupos(data) {
 		}
 	}
 ```
+# 9.	Validar que las fechas sean diferentes
+```js
+function FechaFChanged() {
+		let inicial = $("#FechaI").dxDateBox("instance").option("value");
+		let Final = $("#FechaF").dxDateBox("instance").option("value");
+
+		if (Final < inicial) {
+			DevExpress.ui.notify("La fecha final no puede ser menor que la inicial", "error", 2000);
+			$("#FechaF").dxDateBox("instance").option("value", inicial);
+		}
+	}
+```
+# 10.	Bloquear Fechas
+```js
+function VigenciaJS(data) {
+		if (data.value == true) {
+			$("#FechaI").dxDateBox({"disabled": false});
+			$("#FechaF").dxDateBox({"disabled": false});
+		} else {
+			$("#FechaI").dxDateBox({"disabled": true});
+			$("#FechaF").dxDateBox({"disabled": true});
+		}
+	}
+```
