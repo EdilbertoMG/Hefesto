@@ -92,59 +92,56 @@ namespace Zeus.Inventario.Infrastructure.Entities
 9.	Crear una clase parcial dentro de la ruta **Zeus.Inventario.BusinessLogic\Custom** de la entidad que se acaba de generar y sobrescribir los métodos: **Adicionar(), Modificar(), Eliminar(), ExecuteProcedure()**
 Importante aclarar que ya se debe tener claro cuál es el **Iden** del spwsg asignado que en el ejemplo siguiente es el **153**
 ```c#
-using Hefesto.Backend.Core.Data;
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.IO;
-using System.Xml;
-using System.Xml.Serialization;
+using System.Linq;
+using Hefesto.Backend.Core.Persistencia;
+using Zeus.Inventario.Infrastructure.Entities;
+using System.Collections.Generic;
 
 namespace Zeus.Inventario.BusinessLogic
 {
-    public partial class ProduccionTipoMaquinaBusinessLogic 
-    {
-        #region Reglas de negocio
-
-        public override ProduccionTipoMaquina Adicionar(ProduccionTipoMaquina data)
+        public partial class Concepto_INCsBusinessLogic
         {
-                ValidateRules(ReglasAdicionar, data);
-                return ExecuteOperation("I", data);
-        }
+                #region Reglas de negocio
 
-        public override ProduccionTipoMaquina Modificar(ProduccionTipoMaquina data)
-        {
-                ValidateRules(ReglasAdicionar, data);
-                return ExecuteOperation("U", data);
-        }
-
-        public override ProduccionTipoMaquina Eliminar(ProduccionTipoMaquina data)
-        {
-                ValidateRules(ReglasAdicionar, data);
-                return ExecuteOperation("D", data);
-        }
-
-        protected override ProduccionTipoMaquina ExecuteProcedure(string operation, ProduccionTipoMaquina data)
-        {
-                if (MensajesExcepcion.Any())
+                public override Concepto_INCs Adicionar(Concepto_INCs data)
                 {
-                        data.Errores.AddRange(MensajesExcepcion);
+                        ValidateRules(ReglasAdicionar, data);
+                        return ExecuteOperation("I", data);
                 }
-                else
+
+                public override Concepto_INCs Modificar(Concepto_INCs data)
                 {
-                        EjecutarProcedimientoAlmacenado("spAPI_Inventario", new List<ParametroBd>{
+                        ValidateRules(ReglasAdicionar, data);
+                        return ExecuteOperation("U", data);
+                }
+
+                public override Concepto_INCs Eliminar(Concepto_INCs data)
+                {
+                        ValidateRules(ReglasAdicionar, data);
+                        return ExecuteOperation("D", data);
+                }
+
+                protected override Concepto_INCs ExecuteProcedure(string operation, Concepto_INCs data)
+                {
+                        if (MensajesExcepcion.Any())
+                        {
+                                data.Errores.AddRange(MensajesExcepcion);
+                        }
+                        else
+                        {
+                                EjecutarProcedimientoAlmacenado("spAPI_Inventario", new List<ParametroBd>{
                                 new ParametroBd("@OP", operation),
                                 new ParametroBd("@Iden", "153"),
                                 new ParametroBd("@XML", data.ToXML())
                         });
-                }
+                        }
 
-                return data;
-        }
+                        return data;
+                }
 
                 #endregion
 
-    }
+        }
 }
 ```
 ## SI LA LLAVE PRIMARIA ES UN IDEN
