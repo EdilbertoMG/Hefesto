@@ -481,3 +481,24 @@ public static ProduccionMaquinasModel ToModel(this ProduccionMaquinas entity)
 			};
 		}
 ```
+•	Editar El archivo del Front End **XXXXXXController.cs** y crea la validacion de los forneos que no son requeridos, dentro de **Zeus.Inventario.UI.WebApp**.
+
+```c#
+//Para que no valide campos del foraneo que no son requeridos
+	private void IgnoreTimeStampValidation()
+	{
+		ModelState.Keys.Where(t => t.StartsWith("Bodega.Propiedad1") || t.StartsWith("Bodega.Propiedad2")
+		|| t.StartsWith("Bodega.Propiedad3") || t.StartsWith("Bodega.Propiedad4") || t.StartsWith("Bodega.Propiedad5")
+		|| t.StartsWith("Bodega.Personal") || t.StartsWith("Bodega.TipoFactura") || t.StartsWith("Bodega.Bu"))
+		.ToList().ForEach(t => ModelState.Remove(t));
+	}
+```
+Inicialo en **EditModel**
+```c#
+ private (######Model EditModel(######Model model) 
+        {
+            ViewBag.Prefix(###### = Prefix;
+            string iduser = User.Claims.FirstOrDefault(x => x.Type.EndsWith("/nameidentifier")).Value;
+
+		IgnoreTimeStampValidation();
+```
