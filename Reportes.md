@@ -561,3 +561,26 @@ function VigenciaJS(data) {
 		}
 	}
 ```
+# 10.	Parametros Global
+Si se necesita que los parametros globales sean precargados en nuestra vista, primero iniciamos nuestras variables en el controlador
+```c#
+DateTime FechaCorte;
+		DateTime FechaCorteInicial;
+```
+
+```c#
+//le hacemos un get a ParametrosBusinessLogic
+			List<ParametroSimple> parametros = ParametrosBusinessLogic.GetParameters(httpContextAccessor, httpContextAccessor.GetToken(), config);
+
+			// variable que recibe el parametro
+			string sFechaCorte;
+
+			//le hacemos un get a parametros en la fecha de corte
+			sFechaCorte = parametros.Get("Fechacorte");
+
+			//lo parseamos a tipo fecha ya que se necesita en los controles devextreme
+			FechaCorte = DateTime.Parse(sFechaCorte);
+
+			//por funcionalidad en otra variable lo parseamos a el dia uno del mismo año y mes
+			FechaCorteInicial = new DateTime(FechaCorte.Year, FechaCorte.Month, 1);
+```
