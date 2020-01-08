@@ -561,7 +561,7 @@ function VigenciaJS(data) {
 		}
 	}
 ```
-# 10.	Parametros Global
+# 10.	Parametros Globales
 Si se necesita que los parametros globales sean precargados en nuestra vista, primero iniciamos nuestras variables en el controlador
 ```c#
 DateTime FechaCorte;
