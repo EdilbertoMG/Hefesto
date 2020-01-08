@@ -564,12 +564,12 @@ function VigenciaJS(data) {
 # 10.	Parametros Global
 Si se necesita que los parametros globales sean precargados en nuestra vista, primero iniciamos nuestras variables en el controlador
 ```c#
-DateTime FechaCorte;
+		DateTime FechaCorte;
 		DateTime FechaCorteInicial;
 ```
 
 ```c#
-//le hacemos un get a ParametrosBusinessLogic
+			//le hacemos un get a ParametrosBusinessLogic
 			List<ParametroSimple> parametros = ParametrosBusinessLogic.GetParameters(httpContextAccessor, httpContextAccessor.GetToken(), config);
 
 			// variable que recibe el parametro
