@@ -544,7 +544,7 @@ function FechaFChanged() {
 		let Final = $("#FechaF").dxDateBox("instance").option("value");
 
 		if (Final < inicial) {
-			DevExpress.ui.notify("La fecha final no puede ser menor que la inicial", "error", 2000);
+			DevExpress.ui.notify("La fecha final no puede ser menor que la inicial", "warning", 2000);
 			$("#FechaF").dxDateBox("instance").option("value", inicial);
 		}
 	}
