@@ -540,8 +540,8 @@ function Grupos(data) {
 # 9.	Validar que las fechas sean diferentes
 ```js
 function FechaFChanged() {
-		let inicial = $("#FechaI").dxDateBox("instance").option("value");
-		let Final = $("#FechaF").dxDateBox("instance").option("value");
+		let inicial = $("#FechaI").dxDateBox("instance").option("text");
+		let Final = $("#FechaF").dxDateBox("instance").option("text");
 
 		if (Final < inicial) {
 			DevExpress.ui.notify("La fecha final no puede ser menor que la inicial", "warning", 2000);
