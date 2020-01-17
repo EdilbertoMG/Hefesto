@@ -584,3 +584,41 @@ FechaCorte = DateTime.Parse(sFechaCorte);
 //por funcionalidad en otra variable lo parseamos a el dia uno del mismo año y mes
 FechaCorteInicial = new DateTime(FechaCorte.Year, FechaCorte.Month, 1);
 ```
+# 10.	Buscadores Foraneos
+```Js
+// Foraneos Iniciales
+	function getDatosBuscadorI(data, codevalue, textboxF4) {
+
+		var registro = data.data[0];
+		var IdDelTextAsociado = textboxF4;
+		var IdDelTextAsociadoF = IdDelTextAsociado.replace("IShow", "FShow");
+		if (data.data[0]) {
+			if (registro.Codigo == undefined) {
+				$("#" + IdDelTextAsociado).val(registro.codigo);
+				$("#" + IdDelTextAsociadoF).val(registro.codigo);
+			} else {
+				$("#" + IdDelTextAsociado).val(registro.Codigo);
+				$("#" + IdDelTextAsociadoF).val(registro.Codigo);
+			}
+		} else {
+			$("#" + IdDelTextAsociado).val("");
+		}
+	}
+
+	// Foraneos Finales
+	function getDatosBuscadorF(data, codevalue, textboxF4) {
+
+		var registro = data.data[0];
+		var IdDelTextAsociado = textboxF4;
+
+		if (data.data[0]) {
+			if (registro.Codigo == undefined) {
+				$("#" + IdDelTextAsociado).val(registro.codigo);
+			} else {
+				$("#" + IdDelTextAsociado).val(registro.Codigo);
+			}
+		} else {
+			$("#" + IdDelTextAsociado).val("");
+		}
+	}
+```
