@@ -238,21 +238,48 @@ Luego solo tocaria en la funcion javascript que llena los datos que se encuentra
 
 Hacemos todo igual que un Select, hasta que lleguemos a la parte del control **HTML** usamos este:
 ```cshtml
-<input type="hidden" id="TiposDocumentos" paramReport="TiposDocumentos" />
-						@(Html.DevExtreme().List()
-									    .Height(120)
-									    .ShowSelectionControls(true)
-									    .SelectionMode(ListSelectionMode.All)
-									    .SelectAllMode(SelectAllMode.AllPages)
-									    .DataSource(Model.TiposDocumentos, "Valor")
-									    .ItemTemplate(@<text><%- Texto %></text>)
-									    .OnSelectionChanged("TiposDeDocumentosJS")
+<fieldset class="scheduler-border">
+					<legend class="scheduler-border">
+						@(Html.DevExtreme().CheckBox()
+						      .Value(false)
+						      .Text("Seleccionar Todos")
+						      .ID("listCheck")
+						      .OnValueChanged("SeleccionaAll")
 						)
+					</legend>
+					<input type="hidden" id="TipoDeDocumento" paramReport="TipoDeDocumento" />
+					@(Html.DevExtreme().List()
+							    .ID("simpleList")
+							    .Height(300)
+							    .ShowSelectionControls(true)
+							    .SelectionMode(ListSelectionMode.Multiple)
+							    .SelectAllMode(SelectAllMode.AllPages)
+							    .SearchEnabled(true)
+							    .SearchExpr(new[] { "Texto" })
+							    .PageLoadMode(ListPageLoadMode.ScrollBottom)
+							    .DataSource(Model.TipoDeDocumento, "Valor")
+							    .ItemTemplate(@<text><%- Texto %></text>)
+							    .OnSelectionChanged("TiposDeDocumentosJS")
+							    .NextButtonText("Cargar Mas")
+							    .ID("TipoDeDocumentoID"))
+				</fieldset>
 ```
 Luego Creamos la siguiente funcion JavaScript para recibir los datos y armar la cadena que vamos a enviar 
 ```javascript
 function TiposDeDocumentosJS(data) {
-		$("#TiposDocumentos").val(data.component.option("selectedItemKeys").join(","));
+		$("#TipoDeDocumento").val(data.component.option("selectedItemKeys").join(","));
+	}
+
+	function SeleccionaAll(data) {
+         var listWidget1 = $("#TipoDeDocumentoID").dxList('instance');
+            if (data.value == true) {
+                listWidget1.selectAll();
+		    listWidget1.option("disabled", true);
+		    $("#TipoDeDocumento").val("");
+            } else {
+                listWidget1.unselectAll();
+                listWidget1.option("disabled", false);
+            }
 	}
 ```
 **Opcional** En la funcion **validateReport()** valida que la cadena no se vaya vacia 
@@ -263,10 +290,6 @@ if (TiposDocumentos == "") {
 			DevExpress.ui.notify("Seleccione al menos un Documento", "error", 2000);
 			return false
 		}
-```
-Si quieres cambiar el nombre de la cabezera usas el siguiente codigo en la funcion **$(document).ready(function () {};**
-```javascript
-$(".dx-list-select-all-label").html("Seleccionar todo");
 ```
 # 6.	Select que se filtra apartir de un buscador 
 
