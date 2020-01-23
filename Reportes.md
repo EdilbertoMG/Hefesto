@@ -646,7 +646,7 @@ FechaCorteInicial = new DateTime(FechaCorte.Year, FechaCorte.Month, 1);
 	}
 ```
 # 10.	Cargando que Bloquea la Pantalla
-```
+```js
 $("#hefesto-block-loading").addClass("blockScreenGifLoading");
 $("#container-zeus").addClass("blockScreenUnder");
 ```
