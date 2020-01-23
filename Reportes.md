@@ -291,7 +291,7 @@ if (TiposDocumentos == "") {
 			return false
 		}
 ```
-# 6.	Select que se filtra apartir de un buscador 
+# 7.	Select que se filtra apartir de un buscador 
 
 Dentro de nuesto **HTML** creamos un un **div** y le damos un **id**, en este div es donde se creara el select.
 ```cshtml
@@ -387,7 +387,7 @@ If @Op = 'FUENTE_SERIE'
 
 	End
 ```
-# 6.	Lista que crea un XML 
+# 8.	Lista que crea un XML 
 
 Hacemos todos los pasos igual que un **Select** hasta llegar al controlador html y hacemos lo siguiente.
 
@@ -445,12 +445,12 @@ var cadenaMeses = $("#Cadena").val();
 			dividirCadena(cadenaMeses, coma);
 		}
 ```
-# 7.	Obtener Valor de un Checkbox si esta chequeado o no, Obtener Valor de un RadioGroup
+# 9.	Obtener Valor de un Checkbox si esta chequeado o no, Obtener Valor de un RadioGroup
 ```js
 let ArtCheck = $("#Articulo").dxCheckBox("instance").option("value");
 let CampoAMostrardxRadio = $("#CampoAMostrardxRadio").dxRadioGroup("instance").option("value");
 ```
-# 8.	Javascript Buscadores para manejar multiples buscadores desde una sola función
+# 10.	Javascript Buscadores para manejar multiples buscadores desde una sola función
 ```js
 // Foraneos
 	function getDatosBuscador(data, codevalue, textboxF4) {
@@ -465,7 +465,7 @@ let CampoAMostrardxRadio = $("#CampoAMostrardxRadio").dxRadioGroup("instance").o
 		}
 	}
 ```
-# 8.	Select que Bloquea se bloquea cuando se usa y activa un buscador 
+# 11.	Select que Bloquea se bloquea cuando se usa y activa un buscador 
 ```js
 function Grupos(data) {
 
@@ -560,7 +560,7 @@ function Grupos(data) {
 		}
 	}
 ```
-# 9.	Validar que las fechas sean diferentes
+# 12.	Validar que las fechas sean diferentes
 ```js
 function FechaFChanged() {
 		let inicial = $("#FechaI").dxDateBox("instance").option("text");
@@ -572,7 +572,7 @@ function FechaFChanged() {
 		}
 	}
 ```
-# 10.	Bloquear Fechas
+# 13.	Bloquear Fechas
 ```js
 function VigenciaJS(data) {
 		if (data.value == true) {
@@ -584,7 +584,7 @@ function VigenciaJS(data) {
 		}
 	}
 ```
-# 10.	Parametros Globales
+# 14.	Parametros Globales
 Si se necesita que los parametros globales sean precargados en nuestra vista, primero iniciamos nuestras variables en el controlador
 ```c#
 DateTime FechaCorte;
@@ -607,7 +607,7 @@ FechaCorte = DateTime.Parse(sFechaCorte);
 //por funcionalidad en otra variable lo parseamos a el dia uno del mismo año y mes
 FechaCorteInicial = new DateTime(FechaCorte.Year, FechaCorte.Month, 1);
 ```
-# 10.	Buscadores Foraneos
+# 15.	Buscadores Foraneos
 ```Js
 // Foraneos Iniciales
 	function getDatosBuscadorI(data, codevalue, textboxF4) {
@@ -645,7 +645,7 @@ FechaCorteInicial = new DateTime(FechaCorte.Year, FechaCorte.Month, 1);
 		}
 	}
 ```
-# 10.	Cargando que Bloquea la Pantalla
+# 16.	Cargando que Bloquea la Pantalla
 ```js
 $("#hefesto-block-loading").addClass("blockScreenGifLoading");
 $("#container-zeus").addClass("blockScreenUnder");
