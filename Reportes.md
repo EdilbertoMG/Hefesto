@@ -249,7 +249,6 @@ Hacemos todo igual que un Select, hasta que lleguemos a la parte del control **H
 					</legend>
 					<input type="hidden" id="TipoDeDocumento" paramReport="TipoDeDocumento" />
 					@(Html.DevExtreme().List()
-							    .ID("simpleList")
 							    .Height(300)
 							    .ShowSelectionControls(true)
 							    .SelectionMode(ListSelectionMode.Multiple)
