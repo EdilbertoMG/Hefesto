@@ -248,10 +248,23 @@ Hacemos todo igual que un Select, hasta que lleguemos a la parte del control **H
 Luego Creamos la siguiente funcion JavaScript para recibir los datos y armar la cadena que vamos a enviar 
 ```javascript
 var Lista,
-CheckLista;
+		CheckLista,
+		TextoBodegas,
+		Bandera1;
 
-function TiposDeDocumentosJS(data) {
-		$("#TipoDeDocumento").val(data.component.option("selectedItemKeys").join(","));
+function TextoBodegasJS(data) {
+		let totalCont = Lista._dataSource._totalCount;
+
+		if (totalCont != data.component.option("selectedItemKeys").length) {
+			Bandera1 = false;
+			CheckLista.option("value", false);
+			Bandera1 = true;
+		} else if (CheckLista.option("value") == false) {
+			Bandera1 = false;
+			CheckLista.option("value", true);
+			Bandera1 = true;
+		}
+		TextoBodegas.val(data.component.option("selectedItemKeys").join(","));
 	}
 
 	function SeleccionaAll(data) {
