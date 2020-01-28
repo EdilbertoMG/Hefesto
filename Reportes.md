@@ -216,28 +216,6 @@ En nuestro **HTML** dentro del buscador debajo del **funcCallBack** pegamos lo s
 ```cshtml
 addConditionParams=@searcherAddParams.GetStringAddCondition()
 ```
-**Opcional** Por lo general estos buscadores en primera intancia cuando es dinamico dependiendo de otro buscador al no recibir datos siempre tienden a mostrar todos los valores para que esto funcione se debe crear unos valores por defecto en nuestro **HTML**, que por lo general el inicial es vacio y el final **zzzz**
-```html
-<input type="hidden" id="FuenteIShowParam" value="" />
-<input type="hidden" id="FuenteFShowParam" value="zzzz" />
-```
-Luego solo tocaria en la funcion javascript que llena los datos que se encuentran en los buscadores darle valores cada vez que se seleccioné un registro.
-```javascript
-// Foraneo FuenteI
-	function getDatosFuenteI(data) {
-		var registro = data.data[0];
-
-		if (data.data[0]) {
-		        $("#FuenteIShow").val(registro.Codigo);
-			$("#FuenteFShow").val(registro.Codigo);
-			$("#FuenteIShowParam").val(registro.Codigo);
-			$("#FuenteFShowParam").val(registro.Codigo);
-		} else {
-			$("#FuenteIShow").val("");
-			$("#FuenteIShowParam").val("");
-		}
-	}
-```
 # 6.	Listas (Para datos de tipo cadenas separados por ,)
 
 Hacemos todo igual que un Select, hasta que lleguemos a la parte del control **HTML** usamos este:
