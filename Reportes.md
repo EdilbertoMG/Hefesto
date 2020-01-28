@@ -247,6 +247,14 @@ Hacemos todo igual que un Select, hasta que lleguemos a la parte del control **H
 ```
 Luego Creamos la siguiente funcion JavaScript para recibir los datos y armar la cadena que vamos a enviar 
 ```javascript
+$(document).ready(function () {
+		Lista = $("#TextoBodegasID").dxList("instance");
+		CheckLista = $("#CheckLista").dxCheckBox(("instance"));
+		TextoBodegas = $("#TextoBodegas");
+		Bandera1 = true;
+	});
+```
+```javascript
 var Lista,
 		CheckLista,
 		TextoBodegas,
