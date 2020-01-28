@@ -277,7 +277,9 @@ function TextoBodegasJS(data) {
 		}
 		TextoBodegas.val(data.component.option("selectedItemKeys").join(","));
 	}
-
+```
+Funcion que selecciona todos los datos de la lista mediante un checkbox
+```javascript
 	function SeleccionaAll(data) {
 			if (data.value == true) {
 				Lista.selectAll();
