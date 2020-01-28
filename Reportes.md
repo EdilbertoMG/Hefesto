@@ -224,43 +224,42 @@ Hacemos todo igual que un Select, hasta que lleguemos a la parte del control **H
 					<legend class="scheduler-border">
 						@(Html.DevExtreme().CheckBox()
 						      .Value(false)
-						      .Text("Seleccionar Todos")
-						      .ID("listCheck")
+						      .Text("Bodegas Seleccionar Todas")
+						      .ID("CheckLista")
 						      .OnValueChanged("SeleccionaAll")
 						)
 					</legend>
-					<input type="hidden" id="TipoDeDocumento" paramReport="TipoDeDocumento" />
+					<input type="hidden" id="TextoBodegas" paramReport="TextoBodegas" />
 					@(Html.DevExtreme().List()
-							    .Height(300)
+							    .Height(250)
 							    .ShowSelectionControls(true)
 							    .SelectionMode(ListSelectionMode.Multiple)
 							    .SelectAllMode(SelectAllMode.AllPages)
 							    .SearchEnabled(true)
 							    .SearchExpr(new[] { "Texto" })
 							    .PageLoadMode(ListPageLoadMode.ScrollBottom)
-							    .DataSource(Model.TipoDeDocumento, "Valor")
+							    .DataSource(Model.TextoBodegas, "Valor")
 							    .ItemTemplate(@<text><%- Texto %></text>)
-							    .OnSelectionChanged("TiposDeDocumentosJS")
-							    .NextButtonText("Cargar Mas")
-							    .ID("TipoDeDocumentoID"))
+								.OnSelectionChanged("TextoBodegasJS")
+								.NextButtonText("Cargar Mas")
+								.ID("TextoBodegasID"))
 				</fieldset>
 ```
 Luego Creamos la siguiente funcion JavaScript para recibir los datos y armar la cadena que vamos a enviar 
 ```javascript
+var Lista,
+CheckLista;
+
 function TiposDeDocumentosJS(data) {
 		$("#TipoDeDocumento").val(data.component.option("selectedItemKeys").join(","));
 	}
 
 	function SeleccionaAll(data) {
-         var listWidget1 = $("#TipoDeDocumentoID").dxList('instance');
-            if (data.value == true) {
-                listWidget1.selectAll();
-		    listWidget1.option("disabled", true);
-		    $("#TipoDeDocumento").val("");
-            } else {
-                listWidget1.unselectAll();
-                listWidget1.option("disabled", false);
-            }
+			if (data.value == true) {
+				Lista.selectAll();
+			} else {
+				Lista.unselectAll();
+			}
 	}
 ```
 **Opcional** En la funcion **validateReport()** valida que la cadena no se vaya vacia 
