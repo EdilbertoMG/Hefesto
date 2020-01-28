@@ -125,18 +125,22 @@ Se puede usar de esta manera cuando el dato que recibe el FRX es distinto de BIT
 ```
 # 4.	Bloquear un un buscador mediante un CheckBox
 ```javascript
-function IncluirConceptosJS(data) {
-		var prefixed = '@ViewBag.PrefixReporteAcumuladoDeVentasVendedor';
+function IndicadorBodegaJS(data) {
+		let BodegaI = $("#BodegaIShow"),
+			BodegaF = $("#BodegaFShow"),
+			BtnBodegaI = $("#btnOpenSearcherBodegaI"),
+			BtnBodegaF = $("#btnOpenSearcherBodegaF");
+
 		if (data.value) {
-			$("#" + prefixed + "_ConceptoI").val("").prop("disabled", false).removeClass("readonly");
-			$("#" + prefixed + "_ConceptoF").val("").prop("disabled", false).removeClass("readonly");
-			$("#btnOpenSearcherConceptoI").removeClass("disabled");
-			$("#btnOpenSearcherConceptoF").removeClass("disabled");
+			BodegaI.prop("disabled", false).removeClass("readonly").val("");
+			BodegaF.prop("disabled", false).removeClass("readonly").val("");
+			BtnBodegaI.removeClass("disabled");
+			BtnBodegaF.removeClass("disabled");
 		} else {
-			$("#" + prefixed + "_ConceptoI").val("").prop("disabled", true).addClass("readonly");
-			$("#" + prefixed + "_ConceptoF").val("").prop("disabled", true).addClass("readonly");
-			$("#btnOpenSearcherConceptoI").addClass("disabled");
-			$("#btnOpenSearcherConceptoF").addClass("disabled");
+			BodegaI.prop("disabled", true).addClass("readonly").val("");
+			BodegaF.prop("disabled", true).addClass("readonly").val("");
+			BtnBodegaI.addClass("disabled");
+			BtnBodegaF.addClass("disabled");
 		}
 	}
 ```
