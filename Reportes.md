@@ -245,13 +245,14 @@ Hacemos todo igual que un Select, hasta que lleguemos a la parte del control **H
 								.ID("TextoBodegasID"))
 				</fieldset>
 ```
-Luego Creamos la siguiente funcion JavaScript para recibir los datos y armar la cadena que vamos a enviar 
+Creamos Unas varibales Globales
 ```javascript
 var Lista,
 		CheckLista,
 		TextoBodegas,
 		Bandera1;
 ```
+Le damos valor a estar varibales con los controles que se usaran en la funcion **$(document).ready(function ()** de nuestra vista
 ```javascript
 $(document).ready(function () {
 		Lista = $("#TextoBodegasID").dxList("instance");
@@ -260,7 +261,8 @@ $(document).ready(function () {
 		Bandera1 = true;
 	});
 ```
-```javascrip
+Luego Creamos la siguiente funcion JavaScript para recibir los datos y armar la cadena que vamos a enviar 
+```javascript
 function TextoBodegasJS(data) {
 		let totalCont = Lista._dataSource._totalCount;
 
