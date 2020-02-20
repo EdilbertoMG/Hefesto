@@ -247,46 +247,53 @@ Hacemos todo igual que un Select, hasta que lleguemos a la parte del control **H
 ```
 Creamos Unas varibales Globales
 ```javascript
-var Lista,
-		CheckLista,
-		TextoBodegas,
-		Bandera1;
+var
+		IDListBodegas,
+		CheckTodos,
+		Bodegas,
+		Bandera1
+		;
 ```
 Le damos valor a estar varibales con los controles que se usaran en la funcion **$(document).ready(function ()** de nuestra vista
 ```javascript
 $(document).ready(function () {
-		Lista = $("#TextoBodegasID").dxList("instance");
-		CheckLista = $("#CheckLista").dxCheckBox(("instance"));
-		TextoBodegas = $("#TextoBodegas");
-		Bandera1 = true;
+		setCodeHeaderMaster("ReporteImportacionInventario_", "", "", "", "");
+		zSEARCHER_EVENTS();
+
+		IDListBodegas = $("#IDListBodegas").dxList('instance');
+		CheckTodos = $("#CheckBoxSelectAll").dxCheckBox("instance");
+		Bodegas = $("#Bodegas");
+		Bandera = true;
+
 	});
+```
+Funcion que selecciona todos los datos de la lista mediante un checkbox
+```function SelectAllJS(data) {
+		if (Bandera) {
+			if (data.value == true) {
+				IDListBodegas.selectAll();
+			} else {
+				IDListBodegas.unselectAll();
+			}
+		}
+        }
 ```
 Luego Creamos la siguiente funcion JavaScript para recibir los datos y armar la cadena que vamos a enviar 
 ```javascript
-function TextoBodegasJS(data) {
-		let totalCont = Lista._dataSource._totalCount;
+function SetearItems(data) {
+            var ItemsCount = IDListBodegas._dataSource._totalCount;
+		Bodegas.val(data.component.option("selectedItemKeys").join(","));
 
-		if (totalCont != data.component.option("selectedItemKeys").length) {
-			Bandera1 = false;
-			CheckLista.option("value", false);
-			Bandera1 = true;
-		} else if (CheckLista.option("value") == false) {
-			Bandera1 = false;
-			CheckLista.option("value", true);
-			Bandera1 = true;
-		}
-		TextoBodegas.val(data.component.option("selectedItemKeys").join(","));
-	}
-```
-Funcion que selecciona todos los datos de la lista mediante un checkbox
-```javascript
-	function SeleccionaAll(data) {
-			if (data.value == true) {
-				Lista.selectAll();
-			} else {
-				Lista.unselectAll();
-			}
-	}
+            if (ItemsCount != data.component.option("selectedItems").length){
+                Bandera = false;
+                CheckTodos.option("value", false);
+                Bandera = true;
+            }else  if (CheckTodos.option("value") == false){
+                Bandera = false;
+                CheckTodos.option("value", true);
+                Bandera = true;
+            }
+        }
 ```
 **Opcional** En la funcion **validateReport()** valida que la cadena no se vaya vacia 
 ```javascript
