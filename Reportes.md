@@ -248,11 +248,10 @@ Hacemos todo igual que un Select, hasta que lleguemos a la parte del control **H
 Creamos Unas varibales Globales
 ```javascript
 var
-		IDListBodegas,
+		var IDListBodegas,
 		CheckTodos,
 		Bodegas,
-		Bandera1
-		;
+		Bandera;
 ```
 Le damos valor a estar varibales con los controles que se usaran en la funcion **$(document).ready(function ()** de nuestra vista
 ```javascript
@@ -280,7 +279,7 @@ Funcion que selecciona todos los datos de la lista mediante un checkbox
 ```
 Luego Creamos la siguiente funcion JavaScript para recibir los datos y armar la cadena que vamos a enviar 
 ```javascript
-function SetearItems(data) {
+function OnSelectionChangedBodegas(data) {
             var ItemsCount = IDListBodegas._dataSource._totalCount;
 		Bodegas.val(data.component.option("selectedItemKeys").join(","));
 
