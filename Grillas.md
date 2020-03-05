@@ -75,6 +75,42 @@ Este paso sirve para que nos retorne los valores que estamos consultando desde e
 
 ## Paso 3
 En nuestra de **Zeus.Inventario.UI.WebApp** en la carpeta **Views** dentro de la Vista **KitEdit.cshtml** pegamos las Grillas Generadas por el Smart code Junto a sus botones si se necesitan, y en ella podemos hacer la configruacion que necesitemos, como segunda forma puedes llamar esa Grilla como vista parcial. en este ejemplo se decide crear las Grillas manualmente para evitar pegar codigo de mas que no se usara en como en la vista parcial.
+
+Botones
+```cshtml
+Dictionary<string, string> actionsList = new Dictionary<string, string>
+	{
+	};
+	List<object> buttonsList = new List<object>
+{
+		new {
+			htmlContent = "<i class=\"fas fa-plus\"></i>",
+			action = "javascript:AgregarEnLaGrillaKit_Articulos()",
+			tooltip = "Agregar"
+	},
+		new {
+			htmlContent = "<i class=\"fas fa-file-excel\"></i>",
+			action = "export",
+			tooltip = "Exportar a Excel"
+		}
+	};
+
+	List<object> buttonsListDos = new List<object>
+{
+		new {
+			htmlContent = "<i class=\"fas fa-plus\"></i>",
+			action = "javascript:AgregarEnLaGrillaKit_Conceptos()",
+			tooltip = "Agregar"
+	},
+		new {
+			htmlContent = "<i class=\"fas fa-file-excel\"></i>",
+			action = "export",
+			tooltip = "Exportar a Excel"
+		}
+	};
+```
+Si los datos dentro de la **Grilla** los quieres guardar con un boton que aparezca arriba de la Grilla debes crearlo como se muestra en etse Ejemplo y en el **action** poner que sera de tipo javascript **action = "javascript:AgregarEnLaGrillaKit_Conceptos()",**
+
 ```cshtml
 <div class="box-body table-responsive no-padding mt-2">
 							@(Html.Zeus().DataGridBasic<View_Kit_ArticulosModel>(actionsList, buttonsList, false, false)
