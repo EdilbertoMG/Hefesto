@@ -15,11 +15,23 @@ public virtual List<View_Kit_Articulos> View_Kit_Articulos { get; set; }
 public virtual List<View_Kit_Conceptos> View_Kit_Conceptos { get; set; }
 ```
 ## Paso 3
-
-
+Creamos dentro de **Zeus.Inventario.BusinessLogic** en el **Custom** creamos nuestros metodos los cuales se usaran en la entidad principal para buscar los datos en la entidad de las Grillas, este paso se debe hacer dentro del custon de las entidades a consultar "tablas de las grillas", no de nuestra entidad principal, para este ejemplo son 2 grillas es decir creamos 1 metodo por cada entidad.
+```c#
+public List<View_Kit_Articulos> BuscarTodosKit(Decimal? Iden)
+		{
+			return this.BuscarTodos(t => t.Kit_Iden == Iden);
+		}
+```
+```c#
+public List<View_Kit_Conceptos> BuscarTodosKit(Decimal? Iden)
+		{
+			return this.BuscarTodos(t => t.Kit_Iden == Iden);
+		}
+```
+Esto nos permitira buscar por Iden o Codigo dependiendo del valor asociado entre la entidad principal y tus otras entidades o tablas.
 ## Paso 4
 
-Dentro de **Zeus.Inventario.BusinessLogic** en el **Custom** sobreescribimos el metodo **BuscarPorId** y dentro asociamos las Variables no mapeadas y mandamos a consultar los datos filtrando por nuestra variable a utilizar en este caso las tablas compartian el Iden, esta busqueda se hace en nuestro metodos creados en el paso anterior en cada entidad (Todo estos pasos son solamente para buscar).
+Dentro de **Zeus.Inventario.BusinessLogic** en el **Custom** sobreescribimos el metodo **BuscarPorId** y dentro asociamos las Variables no mapeadas y mandamos a consultar los datos filtrando por nuestra variable a utilizar en este caso las tablas compartian el Iden, esta busqueda se hace en nuestro metodos creados en el paso anterior en cada entidad (Todo estos pasos son solamente para consultar), ya con esto podemos realizar la busqueda ya sea por Codigo o Id como lo determinamos en nuestra entidad principal con los pasos normales de creacion de maestros.
 ```c#
  public override Kit BuscarPorId(Expression<Func<Kit, bool>> predicate)
                 {
