@@ -1,6 +1,7 @@
 # Grillas
 
 _Forma de crear Grillas en Hefesto_
+
 Antes de hacer los pasos para consultar los datos y guardar verifica bien si las tablas a las cuales vas a crear como Grilla ya tienen todos los datos necesarios que vas a mostrar si no es asi crea una vista en Sql y a esa vista le creas el Back y el Front y luego sigue con los pasos.
 ## Back
 ## Paso 1
