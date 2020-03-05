@@ -72,3 +72,75 @@ View_Kit_Articulos = entity.View_Kit_Articulos,
 View_Kit_Conceptos = entity.View_Kit_Conceptos,
 ```
 Este paso sirve para que nos retorne los valores que estamos consultando desde el Back y podelos usar en el Front
+
+## Paso 3
+En nuestra de **Zeus.Inventario.UI.WebApp** en la carpeta **Views** dentro de la Vista **KitEdit.cshtml** pegamos las Grillas Generadas por el Smart code Junto a sus botones si se necesitan, y en ella podemos hacer la configruacion que necesitemos, como segunda forma puedes llamar esa Grilla como vista parcial. en este ejemplo se decide crear las Grillas manualmente para evitar pegar codigo de mas que no se usara en como en la vista parcial.
+```C#
+<div class="box-body table-responsive no-padding mt-2">
+							@(Html.Zeus().DataGridBasic<View_Kit_ArticulosModel>(actionsList, buttonsList, false, false)
+											.ID("View_Kit_ArticulosModel_grid")
+											.DataSource(Model.View_Kit_Articulos, new string[] { "Kit_Iden", "Iden" })
+											.ColumnAutoWidth(true)
+											.Editing(editing =>
+											{
+												editing.AllowDeleting(true);
+												editing.UseIcons(true);
+											})
+											.Columns(columns =>
+											{
+												columns.AddFor(m => m.Codigo).Caption("Codigo");
+												columns.AddFor(m => m.Nombre).Caption("Nombre");
+												columns.AddFor(m => m.Presentacion).Caption("Presentacion");
+												columns.AddFor(m => m.Cantidad).Caption("Cantidad");
+												columns.AddFor(m => m.Precio).Caption("Precio");
+											})
+							)
+						</div>
+```
+```C#
+<div class="box-body table-responsive no-padding mt-2">
+							@(Html.Zeus().DataGridBasic<View_Kit_ConceptosModel>(actionsList, buttonsListDos, false, false)
+							.ID("View_Kit_ConceptosModel_grid")
+							.DataSource(Model.View_Kit_Conceptos, new string[] { "Kit_Iden", "Iden" })
+							.Editing(editing =>
+							{
+							editing.AllowDeleting(true);
+							editing.UseIcons(true);
+
+							})
+							.SearchPanel(sp => { sp.Visible(true); sp.Placeholder("Buscar"); sp.Width(240); }).Hint("Buscar")
+							.Columns(columns =>
+							{
+							columns.AddFor(m => m.Codigo).Caption("Codigo");
+							columns.AddFor(m => m.Nombre).Caption("Nombre");
+							columns.AddFor(m => m.Cantidad).Caption("Cantidad");
+							columns.AddFor(m => m.Precio).Caption("Precio");
+							})
+							.ColumnHidingEnabled(false)
+							.RemoteOperations(true)
+							.ShowBorders(true)
+							.ShowColumnLines(false)
+							.ShowRowLines(true)
+							.RowAlternationEnabled(true)
+							.Paging(p => p.PageSize(10))
+							.Pager(p => p
+								.ShowInfo(true)
+								.InfoText("Página {0} de {1} ({2} registros)")
+								.ShowNavigationButtons(true)
+								.ShowPageSizeSelector(false)
+								.AllowedPageSizes(new int[] { 10, 50, 100 })
+								.Visible(true))
+							.NoDataText("No hay datos")
+							.Export(x => x
+								.Enabled(false)
+								.AllowExportSelectedData(false)
+								.ExcelFilterEnabled(true))
+							.HeaderFilter(h => h.Visible(false))
+							.FilterRow(p => p.Visible(false))
+							.SearchPanel(s => s
+							.Visible(true)
+							.Width(240)
+							.Placeholder("Buscar"))
+							)
+						</div>
+```
