@@ -1,7 +1,7 @@
 # Grillas
 
 _Forma de crear Grillas en Hefesto_
-
+## Para Consultar
 ## Paso 1
 
 Creamos nuestro Back Y Front con el mismo flujo de Siempre: las gruilla por lo general son tablas las cuales debebemos crearle nuestro Back y Fron normalmente (No debes crear Sp ya que estas grillas solo serviran para consultar los datos).
@@ -48,3 +48,11 @@ Dentro de **Zeus.Inventario.BusinessLogic** en el **Custom** sobreescribimos el 
                         return Kit;
                 }
 ```
+## Para Guardar
+## Paso 1
+Dentro de **Zeus.Inventario.Api** en la Carpeta **Controllers** de nuestra entidad, en la clase Put **public Kit Put**, agregamos.
+```C#
+objetoActual.View_Kit_Articulos = model.View_Kit_Articulos;
+objetoActual.View_Kit_Conceptos = model.View_Kit_Conceptos;
+```
+Agregamos las varibales creadas en el primer paso y la igualamos con los valores que traera el modelo en el Put para que asi nos reciba los datos que enviaremos desde el Front en los pasos que vienen a continuacion.
