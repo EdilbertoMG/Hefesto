@@ -109,7 +109,7 @@ Dictionary<string, string> actionsList = new Dictionary<string, string>
 		}
 	};
 ```
-Si los datos dentro de la **Grilla** los quieres guardar con un boton que aparezca arriba de la Grilla debes crearlo como se muestra en etse Ejemplo y en el **action** poner que sera de tipo javascript **action = "javascript:AgregarEnLaGrillaKit_Conceptos()",**
+Si los datos dentro de la **Grilla** los quieres guardar con un boton que aparezca arriba de la Grilla debes crearlo como se muestra en este Ejemplo y en el **action** poner que sera de tipo javascript **action = "javascript:AgregarEnLaGrillaKit_Conceptos()",**
 
 ```cshtml
 <div class="box-body table-responsive no-padding mt-2">
@@ -190,3 +190,113 @@ Creamos unas con devextreme un **HiddenFor** por cada grilla que apuenten a nues
 		@Html.HiddenFor(m => m.Kit_ArticulosGridSerialized, new { id = "Kit_ArticulosGridSerialized" })
 		@Html.HiddenFor(m => m.Kit_ConceptosSerialized, new { id = "Kit_ConceptosSerialized" })
 ```
+## Paso 5
+En nuestro **JavaScript** hacemos las validaciones correspondientes de los datos que se van a insertar en la Grilla al precionarl el boton que hemos configurado anteriormente, luego de estas validaciones procedemos a agregar los datos a la Grilla de la siguiente manera, en este ejemplo por ser 2 Grillas se hacen 2 veces.
+```js
+function AgregarEnLaGrillaKit_Articulos() {
+
+	let Iden = $("#Iden").val(),
+		KitCodigo = $("#KitCodigo"),
+		ArticuloShow = $("#ArticuloShow"),
+		ArticulosNombre = $("#ArticulosNombre").dxTextBox("instance"),
+		Presentacion = $("#ArticulosPresentacion").dxSelectBox("instance"),
+		ArticulosCantidad = $("#ArticulosCantidad").dxNumberBox("instance"),
+		ArticulosPrecio = $("#ArticulosPrecio").dxNumberBox("instance"),
+		Kit_ArticulosGrid = $("#View_Kit_ArticulosModel_grid");
+
+		if (KitCodigo.val() == "") {
+			DevExpress.ui.notify("Agregue un codigo de kit", "warning", 2000);
+		}else if (ArticuloShow.val() == "") {
+			DevExpress.ui.notify("Agregue un Artículo", "warning", 2000);
+		}else if (Presentacion.option("value") == "") {
+			DevExpress.ui.notify("Seleccione una Presentacion", "warning", 2000);
+		}else if ((ArticulosCantidad.option("value") == "") || (ArticulosCantidad == 0)) {
+			DevExpress.ui.notify("Agregue una Cantidad", "warning", 2000);
+		} else {
+			var objetoNuevo = {
+				"Iden": Math.floor(Math.random()*101),
+				"Codigo": ArticuloShow.val(),
+				"Nombre": ArticulosNombre.option("value"),
+				"Presentacion": Presentacion.option("text"),
+				"Cantidad": ArticulosCantidad.option("value"),
+				"Precio": ArticulosPrecio.option("value"),
+				"Kit_Iden": Iden,
+				"Articulo": Presentacion.option("value")
+			}
+
+			Kit_ArticulosGrid.dxDataGrid("getDataSource")["_store"]["_array"].push(objetoNuevo);
+			Kit_ArticulosGrid.dxDataGrid("instance").refresh();
+		}
+	}
+```
+```js
+function AgregarEnLaGrillaKit_Conceptos() {
+		let Iden = $("#Iden").val(),
+		KitCodigo = $("#KitCodigo"),
+		ConceptoShow = $("#ConceptoShow"),
+		ConceptoNombre = $("#ConceptoNombre").dxTextBox("instance"),
+		ConceptoCantidad = $("#ConceptoCantidad").dxNumberBox("instance"),
+		ConceptoPrecio = $("#ConceptoPrecio").dxNumberBox("instance"),
+		Kit_ConceptosGrid = $("#View_Kit_ConceptosModel_grid");
+
+		if (KitCodigo.val() == "") {
+			DevExpress.ui.notify("Agregue un codigo de kit", "warning", 2000);
+		}else if (ConceptoShow.val() == "") {
+			DevExpress.ui.notify("Agregue un Concepto", "warning", 2000);
+		}else if ((ConceptoCantidad.option("value") == "") || (ArticulosCantidad == 0)) {
+			DevExpress.ui.notify("Agregue una Cantidad", "warning", 2000);
+		} else {
+			var objetoNuevo = {
+				"Iden": Math.floor(Math.random()*101),
+				"Codigo": ConceptoShow.val(),
+				"Nombre": ConceptoNombre.option("value"),
+				"Cantidad": ConceptoCantidad.option("value"),
+				"Precio": ConceptoPrecio.option("value"),
+				"Kit_Iden": Iden,
+				"Concepto": idConcepto
+			}
+
+			Kit_ConceptosGrid.dxDataGrid("getDataSource")["_store"]["_array"].push(objetoNuevo);
+			Kit_ConceptosGrid.dxDataGrid("instance").refresh();
+		}
+	}
+```
+## Paso 6
+Dentro de **JavaScript** en la primera funcion en la funcionalidad de **window.kitEdit** agregamos **OnBeforeSubmit**, lo cual nos servira para traer todos los datos que esten en nuestra Grilla y luego Serializarlos en un JSON.stringify, meterlos en los **HiddenFor** que creamos en nuestra vista para asi luego enviarlo por las varibales que le asociamos y creamos con anterioridad dentro de nuestro modelo.
+```js
+window.kitEdit = {
+			onFormSuccess: onFormSuccess,
+			onFormFailure: onFormFailure,
+			OnBeforeSubmit: function () {
+				var Kit_ArticulosGrid = $("#View_Kit_ArticulosModel_grid").dxDataGrid("getDataSource"),
+					Kit_ConceptosGrid = $("#View_Kit_ConceptosModel_grid").dxDataGrid("getDataSource");
+
+			$("#Kit_ArticulosGridSerialized").val(JSON.stringify(Kit_ArticulosGrid["_store"]["_array"]));
+			$("#Kit_ConceptosSerialized").val(JSON.stringify(Kit_ConceptosGrid["_store"]["_array"]));
+			return true;
+			}
+		};
+```
+## Paso 7
+Dentro de nuestra vista **__KitEdit.cshtml** asociamos la funcion OnBeforeSubmit al boton guardado que esta en nuestro **ToolbarZeus**
+```js
+@(Html.Zeus().ToolbarZeus("KitToolbar",
+									"#mainPanel",
+									"Kit",
+									"KitForm",
+									"kitEdit.OnBeforeSubmit",
+									Model.EsNuevo,
+									"/Kit/ListPartial",
+									"/Kit/New",
+									string.Format("/Kit/Delete/[['Iden', '{0}']]", Model.Iden),
+									string.Format("/Kit/Duplicate/[['Iden', '{0}']]", Model.Iden),
+									"../theme/images/edit_master.png",
+									false,
+									"Kit_",
+									false,
+									buttonsList,
+									languageResource.Language,
+									"Kit"
+									))
+```
+## Paso 8 
