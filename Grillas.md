@@ -75,7 +75,7 @@ Este paso sirve para que nos retorne los valores que estamos consultando desde e
 
 ## Paso 3
 En nuestra de **Zeus.Inventario.UI.WebApp** en la carpeta **Views** dentro de la Vista **KitEdit.cshtml** pegamos las Grillas Generadas por el Smart code Junto a sus botones si se necesitan, y en ella podemos hacer la configruacion que necesitemos, como segunda forma puedes llamar esa Grilla como vista parcial. en este ejemplo se decide crear las Grillas manualmente para evitar pegar codigo de mas que no se usara en como en la vista parcial.
-```C#
+```cshtml
 <div class="box-body table-responsive no-padding mt-2">
 							@(Html.Zeus().DataGridBasic<View_Kit_ArticulosModel>(actionsList, buttonsList, false, false)
 											.ID("View_Kit_ArticulosModel_grid")
@@ -98,7 +98,7 @@ En nuestra de **Zeus.Inventario.UI.WebApp** en la carpeta **Views** dentro de la
 						</div>
 ```
 Es de suma importancia que el DataSource apunte a las variable que pasamos del Back al Front con los datos consultados de la entidad de la Grilla **.DataSource(Model.View_Kit_Conceptos, new string[] { "Kit_Iden", "Iden" })**
-```C#
+```cshtml
 <div class="box-body table-responsive no-padding mt-2">
 							@(Html.Zeus().DataGridBasic<View_Kit_ConceptosModel>(actionsList, buttonsListDos, false, false)
 							.ID("View_Kit_ConceptosModel_grid")
@@ -146,3 +146,11 @@ Es de suma importancia que el DataSource apunte a las variable que pasamos del B
 						</div>
 ```
 Es de suma importancia que el DataSource apunte a las variable que pasamos del Back al Front con los datos consultados de la entidad de la Grilla **.DataSource(Model.View_Kit_Conceptos, new string[] { "Kit_Iden", "Iden" })**
+
+## Paso 4
+Creamos unas con devextreme un **HiddenFor** por cada grilla que apuenten a nuestra variables creadad en el modelo del Front para poder enviar los datos de la Grilla al Back, le asiganamos tambien un Id unico.
+```cshtml
+<!-- Datos de las Grillas Ocultos -->
+		@Html.HiddenFor(m => m.Kit_ArticulosGridSerialized, new { id = "Kit_ArticulosGridSerialized" })
+		@Html.HiddenFor(m => m.Kit_ConceptosSerialized, new { id = "Kit_ConceptosSerialized" })
+```
