@@ -1,7 +1,8 @@
 # Grillas
 
 _Forma de crear Grillas en Hefesto_
-## Para Consultar
+Antes de hacer los pasos para consultar los datos y guardar verifica bien si las tablas a las cuales vas a crear como Grilla ya tienen todos los datos necesarios que vas a mostrar si no es asi crea una vista en Sql y a esa vista le creas el Back y el Front y luego sigue con los pasos.
+## Back
 ## Paso 1
 
 Creamos nuestro Back Y Front con el mismo flujo de Siempre: las gruilla por lo general son tablas las cuales debebemos crearle nuestro Back y Fron normalmente (No debes crear Sp ya que estas grillas solo serviran para consultar los datos).
@@ -48,11 +49,25 @@ Dentro de **Zeus.Inventario.BusinessLogic** en el **Custom** sobreescribimos el 
                         return Kit;
                 }
 ```
-## Para Guardar
+## Front
 ## Paso 1
-Dentro de **Zeus.Inventario.Api** en la Carpeta **Controllers** de nuestra entidad, en la clase Put **public Kit Put**, agregamos.
+Dentro de **Zeus.Inventario.Api** en la Carpeta **Controllers** de nuestra entidad, en la clase Put **Put**, agregamos.
 ```C#
 objetoActual.View_Kit_Articulos = model.View_Kit_Articulos;
 objetoActual.View_Kit_Conceptos = model.View_Kit_Conceptos;
 ```
 Agregamos las varibales creadas en el primer paso y la igualamos con los valores que traera el modelo en el Put para que asi nos reciba los datos que enviaremos desde el Front en los pasos que vienen a continuacion.
+
+## Paso 2
+Dentro del Front en la solucion **Zeus.Inventario.UI.Data** dentro del modelo creamos lo siguiente 
+```C#
+public string Kit_ArticulosGridSerialized { get; set; }
+public string Kit_ConceptosSerialized { get; set; }
+```
+En este ejemplo se crea una variable por cada **Grilla** estas varibales serviran como variables ocultas en nuestro Front para poder enviar los datos que tendran nuestra Grilla.
+Dentro del modelo tambien pegamos lo siguiente dentro de la clase **ToModel**
+```C#
+View_Kit_Articulos = entity.View_Kit_Articulos,
+View_Kit_Conceptos = entity.View_Kit_Conceptos,
+```
+Este paso sirve para que nos retorne los valores que estamos consultando desde el Back y podelos usar en el Front
