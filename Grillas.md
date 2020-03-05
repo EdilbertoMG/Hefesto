@@ -97,6 +97,7 @@ En nuestra de **Zeus.Inventario.UI.WebApp** en la carpeta **Views** dentro de la
 							)
 						</div>
 ```
+Es de suma importancia que el DataSource apunte a las variable que pasamos del Back al Front con los datos consultados de la entidad de la Grilla **.DataSource(Model.View_Kit_Conceptos, new string[] { "Kit_Iden", "Iden" })**
 ```C#
 <div class="box-body table-responsive no-padding mt-2">
 							@(Html.Zeus().DataGridBasic<View_Kit_ConceptosModel>(actionsList, buttonsListDos, false, false)
@@ -144,3 +145,4 @@ En nuestra de **Zeus.Inventario.UI.WebApp** en la carpeta **Views** dentro de la
 							)
 						</div>
 ```
+Es de suma importancia que el DataSource apunte a las variable que pasamos del Back al Front con los datos consultados de la entidad de la Grilla **.DataSource(Model.View_Kit_Conceptos, new string[] { "Kit_Iden", "Iden" })**
