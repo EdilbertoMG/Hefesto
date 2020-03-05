@@ -300,3 +300,17 @@ Dentro de nuestra vista **__KitEdit.cshtml** asociamos la funcion OnBeforeSubmit
 									))
 ```
 ## Paso 8 
+Dentro de **Zeus.Inventario.UI.WebApp** en la carpeta **Controllers** de nuestra entidad en el **[HttpPost]** en la clase **tionResult Edit** hacemos un condicional if donde los datos que enviamos desde nuestra vista no sean nulll, Deserializamos nuestro String, los asociamos como una lista de nuestra variables creadas en nuestro modelo para asi puedan llegar de la forma correcta al Back.
+```c#
+[HttpPost]
+		public ActionResult Edit([Bind(Prefix = Prefix)] KitModel model)
+		{
+			if (model.Kit_ArticulosGridSerialized != null){
+				model.View_Kit_Articulos = JsonConvert.DeserializeObject<List<View_Kit_Articulos>>(model.Kit_ArticulosGridSerialized);
+			}
+			if (model.Kit_ConceptosSerialized != null){
+				model.View_Kit_Conceptos = JsonConvert.DeserializeObject<List<View_Kit_Conceptos>>(model.Kit_ConceptosSerialized);
+			}
+			return PartialView("KitEdit", EditModel(model));
+		}
+```
