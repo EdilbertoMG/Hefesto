@@ -50,8 +50,7 @@ Dentro de **Zeus.Inventario.BusinessLogic** en el **Custom** sobreescribimos el 
                         return Kit;
                 }
 ```
-## Front
-## Paso 1
+## Paso 5
 Dentro de **Zeus.Inventario.Api** en la Carpeta **Controllers** de nuestra entidad, en la clase Put **Put**, agregamos.
 ```C#
 objetoActual.View_Kit_Articulos = model.View_Kit_Articulos;
@@ -59,7 +58,7 @@ objetoActual.View_Kit_Conceptos = model.View_Kit_Conceptos;
 ```
 Agregamos las varibales creadas en el primer paso y la igualamos con los valores que traera el modelo en el Put para que asi nos reciba los datos que enviaremos desde el Front en los pasos que vienen a continuacion.
 
-## Paso 2
+## Paso 6
 Dentro del Front en la solucion **Zeus.Inventario.UI.Data** dentro del modelo creamos lo siguiente 
 ```C#
 public string Kit_ArticulosGridSerialized { get; set; }
@@ -73,7 +72,7 @@ View_Kit_Conceptos = entity.View_Kit_Conceptos,
 ```
 Este paso sirve para que nos retorne los valores que estamos consultando desde el Back y podelos usar en el Front
 
-## Paso 3
+## Paso 7
 En nuestra de **Zeus.Inventario.UI.WebApp** en la carpeta **Views** dentro de la Vista **KitEdit.cshtml** pegamos las Grillas Generadas por el Smart code Junto a sus botones si se necesitan, y en ella podemos hacer la configruacion que necesitemos, como segunda forma puedes llamar esa Grilla como vista parcial. en este ejemplo se decide crear las Grillas manualmente para evitar pegar codigo de mas que no se usara en como en la vista parcial.
 
 Botones
@@ -183,14 +182,14 @@ Es de suma importancia que el DataSource apunte a las variable que pasamos del B
 ```
 Es de suma importancia que el DataSource apunte a las variable que pasamos del Back al Front con los datos consultados de la entidad de la Grilla **.DataSource(Model.View_Kit_Conceptos, new string[] { "Kit_Iden", "Iden" })**
 
-## Paso 4
+## Paso 8
 Creamos unas con devextreme un **HiddenFor** por cada grilla que apuenten a nuestra variables creadad en el modelo del Front para poder enviar los datos de la Grilla al Back, le asiganamos tambien un Id unico.
 ```cshtml
 <!-- Datos de las Grillas Ocultos -->
 		@Html.HiddenFor(m => m.Kit_ArticulosGridSerialized, new { id = "Kit_ArticulosGridSerialized" })
 		@Html.HiddenFor(m => m.Kit_ConceptosSerialized, new { id = "Kit_ConceptosSerialized" })
 ```
-## Paso 5
+## Paso 9
 En nuestro **JavaScript** hacemos las validaciones correspondientes de los datos que se van a insertar en la Grilla al precionarl el boton que hemos configurado anteriormente, luego de estas validaciones procedemos a agregar los datos a la Grilla de la siguiente manera, en este ejemplo por ser 2 Grillas se hacen 2 veces.
 ```js
 function AgregarEnLaGrillaKit_Articulos() {
@@ -261,7 +260,7 @@ function AgregarEnLaGrillaKit_Conceptos() {
 		}
 	}
 ```
-## Paso 6
+## Paso 10
 Dentro de **JavaScript** en la primera funcion en la funcionalidad de **window.kitEdit** agregamos **OnBeforeSubmit**, lo cual nos servira para traer todos los datos que esten en nuestra Grilla y luego Serializarlos en un JSON.stringify, meterlos en los **HiddenFor** que creamos en nuestra vista para asi luego enviarlo por las varibales que le asociamos y creamos con anterioridad dentro de nuestro modelo.
 ```js
 window.kitEdit = {
@@ -277,7 +276,7 @@ window.kitEdit = {
 			}
 		};
 ```
-## Paso 7
+## Paso 11
 Dentro de nuestra vista **__KitEdit.cshtml** asociamos la funcion OnBeforeSubmit al boton guardado que esta en nuestro **ToolbarZeus**
 ```js
 @(Html.Zeus().ToolbarZeus("KitToolbar",
@@ -299,7 +298,7 @@ Dentro de nuestra vista **__KitEdit.cshtml** asociamos la funcion OnBeforeSubmit
 									"Kit"
 									))
 ```
-## Paso 8 
+## Paso 12 
 Dentro de **Zeus.Inventario.UI.WebApp** en la carpeta **Controllers** de nuestra entidad en el **[HttpPost]** en la clase **tionResult Edit** hacemos un condicional if donde los datos que enviamos desde nuestra vista no sean nulll, Deserializamos nuestro String, los asociamos como una lista de nuestra variables creadas en nuestro modelo para asi puedan llegar de la forma correcta al Back.
 ```c#
 [HttpPost]
