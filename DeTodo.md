@@ -2,3 +2,4 @@
 ```js
 FechaEfectiva.option("value").toLocaleDateString()
 ```
+2. Mestros que Tienen Cosas Interesantes **EscenariosImpuestos**
