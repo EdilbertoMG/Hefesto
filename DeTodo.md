@@ -3,3 +3,5 @@
 FechaEfectiva.option("value").toLocaleDateString()
 ```
 2. Mestros que Tienen Cosas Interesantes **EscenariosImpuestos**
+
+3. Maestro donde se reemplaza un Zml por una tabla Ver **SpAPI_ClasificacionTipoDocumento** , **SpClasificacionTipoDocumento** , Tabla creada **TableCiclos_SpId** y Funcion creada **GridTipoDocumentoClasificacion**
