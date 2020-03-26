@@ -21,7 +21,7 @@ GO
 ```
 2.	Si tu opcion tiene Grilla tambien debes crearla como normalmente se hace.
 
-3.	
+3.	Creamos el **Back** y el **Front** normalmente
 
 4.	Editar el archivo **Zeus.Inventario.Infrastructure\Factories\ZeusContextoDB.cs**, ir al final del archivo y asegurarse de crear las líneas de código correspondientes a la tabla en cuestión.
 Declarar:
