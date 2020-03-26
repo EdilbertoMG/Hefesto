@@ -1,6 +1,6 @@
 # Crear Opciones de Configuraciones
 
-1.	En Sql crea una vista para tu Opcion con los campos que se van a mostrar 
+1.	En Sql crea una vista para tu Opcion con los campos que se van a mostrar.
 ```sql
 --liquibase formatted sql
 --changeset emarrugo:1 dbms:mssql runOnChange:true stripComments:false endDelimiter:GO
