@@ -19,7 +19,7 @@ AS
 		
 GO
 ```
-2.	Si tu opcion tiene Grilla tambien debes crearla como normalmente se hace
+2.	Si tu opcion tiene Grilla tambien debes crearla como normalmente se hace.
 
 3.	
 
