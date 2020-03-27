@@ -31,3 +31,15 @@ public IActionResult List()
 			return View("ConfigDctoClienteVsArticuloEdit", GetNewModel());
 		}
 ```
+
+4.	En la funcion **$(document).ready(function (){}** dela vista Edit en el front ocultamos los botones con JQuery
+```js
+$("#ConfigDctoClienteVsArticuloToolbar_btnBack").hide();
+		$("#ConfigDctoClienteVsArticuloToolbar_btnAdd").hide();
+		$("#ConfigDctoClienteVsArticuloToolbar_btnDelete").hide();
+		$("#ConfigDctoClienteVsArticuloToolbar_btnUpdateCode").hide();
+		$("#ConfigDctoClienteVsArticuloToolbar_btnDuplicate").hide();
+		$("#ConfigDctoClienteVsArticuloToolbar_btnSave").hide();
+
+		$(".master-subtitle > span > small").html("");
+``
