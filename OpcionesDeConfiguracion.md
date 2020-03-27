@@ -14,7 +14,7 @@ Create view  [dbo].[ConfigDctoClienteVsArticulo]
 With Encryption
 AS
 	Select 
-		  Codigo = '1'
+		  Codigo = ' '
 		, Nombre = ' '
 		
 GO
@@ -23,8 +23,12 @@ GO
 
 3.	Creamos el **Back** y el **Front** normalmente
 
-4.	Editar el archivo **Zeus.Inventario.Infrastructure\Factories\ZeusContextoDB.cs**, ir al final del archivo y asegurarse de crear las líneas de código correspondientes a la tabla en cuestión.
-Declarar:
+4.	En el Controlador del Front hacemos que nuestro List retorne el Edit Model
 ```c#
-public DbSet<Colores> Colores { get; set; }
+public IActionResult List()
+		{
+			//return View("ConfigDctoClienteVsArticuloList");
+			ConfigDctoClienteVsArticuloModel model = EditModel("");
+			return PartialView("ConfigDctoClienteVsArticuloEdit", model);
+		}
 ```
