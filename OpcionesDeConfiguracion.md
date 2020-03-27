@@ -28,7 +28,6 @@ GO
 public IActionResult List()
 		{
 			//return View("ConfigDctoClienteVsArticuloList");
-			ConfigDctoClienteVsArticuloModel model = EditModel("");
-			return PartialView("ConfigDctoClienteVsArticuloEdit", model);
+			return View("ConfigDctoClienteVsArticuloEdit", GetNewModel());
 		}
 ```
