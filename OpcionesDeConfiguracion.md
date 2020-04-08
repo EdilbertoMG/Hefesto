@@ -42,4 +42,4 @@ $("#ConfigDctoClienteVsArticuloToolbar_btnBack").hide();
 		$("#ConfigDctoClienteVsArticuloToolbar_btnSave").hide();
 
 		$(".master-subtitle > span > small").html("");
-``
+```
