@@ -9,3 +9,9 @@ FechaEfectiva.option("value").toLocaleDateString()
 4. Grilla que Guarda uno a uno **ViewDctoClienteVsArticulo**
 
 5. Grilla que muestra el boton borrado dependiendo de un condicional al crear las celdas **ConfiFormatosDeImpresion**
+
+6. Funcion JavaScript para saber en donde esta el cursos de ecritura o lo que esta selecionado
+```js
+let indiceI = textarea["0"].selectionStart;
+let indiceF = textarea["0"].selectionEnd;
+```
