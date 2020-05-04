@@ -15,3 +15,4 @@ FechaEfectiva.option("value").toLocaleDateString()
 let indiceI = textarea["0"].selectionStart;
 let indiceF = textarea["0"].selectionEnd;
 ```
+7. Grilla que llena datos desde un SP **GridEvaluacionProveedores**.
