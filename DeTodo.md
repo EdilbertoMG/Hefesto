@@ -16,3 +16,5 @@ let indiceI = textarea["0"].selectionStart;
 let indiceF = textarea["0"].selectionEnd;
 ```
 7. Grilla que llena datos desde un SP **GridEvaluacionProveedores**.
+
+8. Grilla creada con Jquery, Consulta dinamica que devulve n numero de campos para ser pintados en el front **ConfigRevaluacionProveedores**
