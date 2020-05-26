@@ -27,19 +27,26 @@ GO
 ```c#
 public IActionResult List()
 		{
-			//return View("ConfigDctoClienteVsArticuloList");
-			return View("ConfigDctoClienteVsArticuloEdit", GetNewModel());
+			return return NewDetail();
 		}
 ```
 
-4.	En la funcion **$(document).ready(function (){}** dela vista Edit en el front ocultamos los botones con JQuery
-```js
-$("#ConfigDctoClienteVsArticuloToolbar_btnBack").hide();
-		$("#ConfigDctoClienteVsArticuloToolbar_btnAdd").hide();
-		$("#ConfigDctoClienteVsArticuloToolbar_btnDelete").hide();
-		$("#ConfigDctoClienteVsArticuloToolbar_btnUpdateCode").hide();
-		$("#ConfigDctoClienteVsArticuloToolbar_btnDuplicate").hide();
-		$("#ConfigDctoClienteVsArticuloToolbar_btnSave").hide();
-
-		$(".master-subtitle > span > small").html("");
+4.	En la carpeta de las vista la __ConfigDctoClienteVsArticulo.cshtml, poniendo esto ocultas los botones que no necesites
+```c#
+@(Html.Zeus().ToolbarZeus("ConfigComisionesDescuentoRecaudoPorVendedorToolbar",
+									"#mainPanel",
+									"Comisión Rentab vs Recaudo",
+									null,
+									null,
+									null,
+									null,
+									null,
+									null,
+									null,
+									null,
+									false,
+									null,
+									false,
+									null,
+									languageResource.Language))
 ```
