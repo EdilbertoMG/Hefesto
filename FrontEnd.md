@@ -229,19 +229,8 @@ namespace Zeus.Inventario.UI.Modules.Controllers
 12.	Si la llave primaria es un **Iden**, también hay agregar al proyecto **Zeus.Inventario.UI.WebApp\Controllers\Custom** una copia del archivo **NOMBREDELOBJETOController.cs** y agregar un nuevo controlador el cual utilizará el nuevo método creado en el proxi **FindById**.
 
 ```c#
-using DevExtreme.AspNet.Data;
-using DevExtreme.AspNet.Data.ResponseModel;
-using DevExtreme.AspNet.Mvc;
-using Hefesto.Backend.Core.Utilities;
-using Hefesto.Frontend.Core.Controllers;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Zeus.Inventario.Infrastructure.Entities;
 using Zeus.Inventario.UI.Data.Factories;
 using Zeus.Inventario.UI.Models;
 
