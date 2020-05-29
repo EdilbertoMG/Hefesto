@@ -148,18 +148,7 @@ namespace Zeus.Inventario.BusinessLogic
 10.	Crear una clase parcial dentro de la ruta **Zeus.Inventario.Api\Controllers\Custom** de la entidad que se acaba de generar y agregar un controlador de búsqueda por código.
 Esta búsqueda siempre hará referencia a la llave visual de la entidad en los casos donde la llave primaria es un **Iden**, para aquellos casos donde la llave primaria es la misma llave visual no es necesario crear este código.
 ```c#
-using DevExtreme.AspNet.Data;
-using DevExtreme.AspNet.Data.ResponseModel;
-using DevExtreme.AspNet.Mvc;
-using Hefesto.Api.Core.Controllers;
-using Hefesto.Backend.Core.Utilities;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Zeus.Inventario.BusinessLogic.Factories;
 using Zeus.Inventario.Infrastructure.Entities;
 
