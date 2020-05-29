@@ -164,57 +164,66 @@ GO
 Lo mejor es crear una sobrecarga del **FindById** que existe.
 
 ```c#
-using DevExtreme.AspNet.Mvc;
-using Hefesto.Backend.Core.Utilities;
 using Hefesto.Frontend.Core.HttpClient;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Zeus.Inventario.Infrastructure.Entities;
 
 namespace Zeus.Inventario.UI.Data.Proxies
 {
-    public partial class ProduccionMaquinasBusinessLogic 
-    {
-        public ProduccionMaquinas FindById(string codigo)
+        public partial class ComisionesClasificacionDeVendedoresBusinessLogic
         {
-            return Task.Run(async () => await FindByIdAsync(codigo)).GetAwaiter().GetResult();
-        }
+                public ComisionesClasificacionDeVendedores FindById(string codigo)
+                {
+                        return Task.Run(async () => await FindByIdAsync(codigo)).GetAwaiter().GetResult();
+                }
 
-        public async Task<ProduccionMaquinas> FindByIdAsync(string codigo)
-        {
-            var requestUri = string.Concat(serviceAddres, "/api/ProduccionMaquinas/GetByCode?Codigo=" + codigo);
-            var response = await HttpRequestFactory.Get(requestUri, token);
-            return response.ContentAsType<ProduccionMaquinas>();
+                public async Task<ComisionesClasificacionDeVendedores> FindByIdAsync(string codigo)
+                {
+                        var requestUri = string.Concat(serviceAddres, "/api/ComisionesClasificacionDeVendedores/GetByCode?Codigo=" + codigo);
+                        var response = await HttpRequestFactory.Get(requestUri, token);
+                        return response.ContentAsType<ComisionesClasificacionDeVendedores>();
+                }
         }
-    }
 }
 ```
 Esta es la ruta que debe existir en el Back End en la carpeta **Zeus.Inventario.UI.Data/Controllers/Custom**
 ```c#
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Zeus.Inventario.BusinessLogic.Factories;
-using Zeus.Inventario.Infrastructure.Entities;
+using Zeus.Inventario.UI.Data.Factories;
+using Zeus.Inventario.UI.Models;
 
-
-namespace Zeus.Inventario.Api.Controllers
+namespace Zeus.Inventario.UI.Modules.Controllers
 {
-	public partial class ProduccionMaquinasController
-    {
-        /// <summary>
-        /// Consulta un registro por su llave visual
-        /// </summary>
-        /// <param name="Codigo"></param>
-        /// <returns>El ProduccionMaquinas</returns>
-        [HttpGet]
-        [Route("GetByCode")]
-        public ProduccionMaquinas GetByCode(string Codigo)
+        [Authorize]
+        public partial class ComisionesClasificacionDeVendedoresController
         {
-                return Manager().ProduccionMaquinasBusinessLogic().BuscarPorId(t => t.Codigo == Codigo);
-        }
+                [HttpGet]
+                public IActionResult GetByCode(string codigo, string nextFieldFocus)
+                {
+                        ViewBag.NextFocus = nextFieldFocus;
+                        ViewBag.PrefixKit = Prefix;
+                        if (string.IsNullOrEmpty(codigo))
+                        {
+                                ModelState.AddModelError($"{Prefix}_Codigo", "Código esta vacio");
+                                return PartialView("ComisionesClasificacionDeVendedoresEdit", GetNewModel());
+                        }
 
-    }
+                        ComisionesClasificacionDeVendedoresModel model = Manager().ComisionesClasificacionDeVendedoresBusinessLogic().FindById(codigo).ToModel();
+
+                        if (model == null)
+                        {
+                                model = GetNewModel();
+                                model.EsNuevo = true;
+                                model.Iden = 0;
+                                model.Codigo = codigo;
+
+                                return PartialView("ComisionesClasificacionDeVendedoresEdit", model);
+                        }
+
+                        return PartialView("ComisionesClasificacionDeVendedoresEdit", model);
+                }
+        }
 }
 ```
 12.	Si la llave primaria es un **Iden**, también hay agregar al proyecto **Zeus.Inventario.UI.WebApp\Controllers\Custom** una copia del archivo **NOMBREDELOBJETOController.cs** y agregar un nuevo controlador el cual utilizará el nuevo método creado en el proxi **FindById**.
