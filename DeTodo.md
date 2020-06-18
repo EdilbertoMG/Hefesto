@@ -20,3 +20,27 @@ let indiceF = textarea["0"].selectionEnd;
 8. Grilla creada con Jquery, Consulta dinamica que devulve n numero de campos para ser pintados en el front **ConfigComisionesDescuentoRecaudoPorVendedor**
 
 9. Cargar archivo plano **GridPuntoDeReordenBodega**, funcionalidad que permite mandar cualquier informacion, pero devolver un modelo o una lista con su manejo de errores.
+
+10. Traere una fecha de SQL y Modelarla a una JavaScript 
+```js
+// traere una fecha de sql y mostrarla en el front
+		function sqlToJsDate(sqlDate) {
+			var sqlDateArr1 = sqlDate.split("/");
+			var sMonth = (Number(sqlDateArr1[1]) - 1).toString();
+			var sDay = sqlDateArr1[0];
+			var sqlDateArr2 = sqlDateArr1[2].split(" ");
+			var sYear = sqlDateArr2[0];
+			var sqlDateArr3 = sqlDateArr2[1].split(":");
+			var sHour = sqlDateArr3[0];
+			var sMinute = sqlDateArr3[1];
+			var sqlDateArr4 = sqlDateArr3[2].split(".");
+			var sSecond = sqlDateArr4[0];
+
+			return new Date(sYear, sMonth, sDay, sHour, sMinute, sSecond);
+		}
+```
+11. Consultar en el front el usuario logueado actualmente
+```c#
+//string idUser = User.Claims.FirstOrDefault(x => x.Type.EndsWith("/nameidentifier"))?.Value;
+	string nombreDeUsuario = User.Identity.Name;
+ ```
