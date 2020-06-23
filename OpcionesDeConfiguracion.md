@@ -50,3 +50,7 @@ public IActionResult List()
 									null,
 									languageResource.Language))
 ```
+```js
+$("#ConfigDctoClienteVsArticuloToolbar_btnSave").hide();
+		$(".master-subtitle > span > small").html("");
+```
