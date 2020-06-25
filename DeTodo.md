@@ -44,3 +44,108 @@ let indiceF = textarea["0"].selectionEnd;
 //string idUser = User.Claims.FirstOrDefault(x => x.Type.EndsWith("/nameidentifier"))?.Value;
 	string nombreDeUsuario = User.Identity.Name;
  ```
+12. Cargar Articulo y Presentacion
+```cshtml
+<div class="row">
+					<div class="col-xl-3 col-lg-3 col-md-3" style="display: none;">
+						<div class="form-group">
+							@(Html.Inventario().NumberBoxFor(m => m.IdArticulo).InputAttr("maxlength", 2147483647).ID("IdArticulo"))
+						</div>
+					</div>
+					<div class="col-xl-3 col-lg-3 col-md-3">
+						<div class="form-group">
+							<label for=@(ViewBag.PrefixConfigControlRentabilidadPorClienteProducto + "_CodigoArticulo")>
+								<span asp-validation-for="CodigoArticulo" class="lbl-msg-required">@languageResource.GetRecurso("CodigoArticulo")</span>
+							</label>
+							<div class="input-group mb-3 searcher-group">
+								@(Html.Zeus().TextBoxFor(m => m.CodigoArticulo)
+                                                            .InputAttr(new
+                                                            {
+                                                                @class = "form-control searcher-field searcher-event",
+                                                                idBtnSearcher = "btnOpenSearcherArticulo",
+                                                                panelHeader = panelHeader,
+                                                                panelGeneral = panelGeneral,
+                                                                maxlength = "25"
+                                                            })
+							    .ID("CodigoArticulo")
+                                                            )
+								<a id="btnOpenSearcherArticulo" title="Buscar"
+								   class="input-group-append searcher-btn searcher-btn-event"
+								   searcherCode="ARTICULO"
+								   typeSelect="CHOICE"
+								   funcCallBack="getDatosArticulo"
+								   prefix=""
+								   textboxF4=""
+								   nextFieldFocus="">
+									<i class="fas fa-search searcher-icon"></i>
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-3 col-lg-3 col-md-3">
+						<div class="form-group">
+							<label for=@(ViewBag.PrefixConfigControlRentabilidadPorClienteProducto + "_NombreArticulo")>
+								<span asp-validation-for="NombreArticulo" class="lbl-msg-required">@languageResource.GetRecurso("Nombre")</span>
+							</label>
+							@(Html.Inventario().TextBoxFor(m => m.NombreArticulo).InputAttr(new { @class = "form-control", maxlength = 100 }).ReadOnly(true).ID("NombreArticulo"))
+						</div>
+					</div>
+					<div class="col-xl-3 col-lg-3 col-md-3">
+						<div class="form-group">
+							<label for=@(ViewBag.PrefixConfigControlRentabilidadPorClienteProducto + "_Presentacion")>
+								<span class="lbl-msg-required">@languageResource.GetRecurso("Presentación")</span>
+							</label>
+							<div class="md-form">
+							@(Html.Inventario().SelectBoxFor(m => m.Presentacion)
+							.ID("PresentacionArticulo")
+							.Disabled(false)
+							.Placeholder("Seleccione Presentación")
+							.OnValueChanged("OnChangePresentacion")
+							)
+							</div>
+						</div>
+					</div>
+				</div>
+
+```
+```js
+<!-- Exportacion de JS con funciones generales de Inventario -->
+<script src="~/js/custom_Inventario.js"></script>
+<!-- Exportacion de JS con funciones generales de Inventario -->
+```
+```js
+<!-- Exportacion de JS con funciones generales de Inventario -->
+function getDatosArticulo(data) {
+		var registro = data.data[0],
+			codigo = $("#CodigoArticulo").dxTextBox("instance"),
+			nombre = $("#NombreArticulo").dxTextBox("instance"),
+			id = $("#IdArticulo").dxNumberBox("instance");
+
+		if (data.data[0]) {
+			codigo.option({ "value": registro.Codigo});
+			nombre.option({ "value": registro.Nombre });
+			id.option({ "value": registro.IdArticulo });
+			CargarComboPresentacion(registro.Codigo, registro.IdArticulo.toString());
+		} else {
+			codigo.option({ "value": "" });
+			nombre.option({ "value": "" });
+			id.option({ "value": "" });
+
+			$("#PresentacionArticulo").dxSelectBox({
+				"value": "",
+				"placeholder": "Seleccione Presentación"
+			});
+		}
+	}
+	function OnChangePresentacion(data) {
+		$("#IdArticulo").dxNumberBox("instance").option({ "value": data.value});
+	}
+	function CargarComboPresentacion(Codigo, Presentacion) {
+
+		var parametros = {
+			"articulo": Codigo
+		};
+
+		CargarPresentacionesArticulos(parametros, Presentacion, "PresentacionArticulo")
+	}
+```
