@@ -149,3 +149,17 @@ function getDatosArticulo(data) {
 		CargarPresentacionesArticulos(parametros, Presentacion, "PresentacionArticulo")
 	}
 ```
+13. Funcionalidad en forma de Alert que pregunta si deseas continuar o no y funciona dependiendo la respuesta
+```js
+// pregunta si desea contiunuar con la operacion
+			var result = DevExpress.ui.dialog.confirm("<p>El vendedor(" + CodigoVendedor + ") ya esta asignado a un equipo ¿desea cambiarlo?</p>", "¿Esta seguro?");
+			result.done(function (dialogResult) {
+				if (dialogResult) {
+					//guardar
+					guardadoGrilla(iden, CodigoVendedor, sel);
+				} else {
+					//actualiza grilla
+					prepararDatos();
+				}
+			});
+```
