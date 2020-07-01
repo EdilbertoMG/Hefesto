@@ -164,3 +164,4 @@ function getDatosArticulo(data) {
 			});
 ```
 14 . Grilla que se Consulta atravez de un Sp, pero dentro de su propio Sp_Api **ConfigControlRentabilidadPorClienteProducto**
+15 . **SpAPI_ControlRentabilidadPorClienteProducto**
