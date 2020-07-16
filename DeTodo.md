@@ -239,3 +239,50 @@ function opcionesEnGrillaFuentes(e) {
 		}
 	}
 ```
+
+18. Grilla ediyable, Focus en Celdes y llave primaria 
+```c#
+@(Html.DevExtreme().DataGrid()
+					    .ID("GridRollFuentesModel_grid")
+					    .Editing(editing =>
+					    {
+						    editing.Mode(GridEditMode.Cell);
+						    editing.AllowUpdating(true);
+						    editing.AllowAdding(false);
+						    editing.AllowDeleting(false);
+						    editing.UseIcons(true);
+					    })
+					    .KeyExpr("Fuente")
+					    .OnRowUpdated("opcionesEnGrillaFuentes")
+					    .FocusedRowEnabled(true)
+					    .FocusedRowKey(-1)
+					    .OnFocusedRowChanged("OnCellClickFuentes")
+					    //.OnCellClick("OnCellClickFuentes")
+					    .Columns(col =>
+					    {
+						    col.Add()
+						    .Alignment(HorizontalAlignment.Center)
+						    .Caption(languageResource.GetRecurso("Fuentes utilizadas por este roll"))
+						    .Columns(columns =>
+						    {
+							    columns.Add().DataField("Check").Visible(true).AllowEditing(true).Caption(languageResource.GetRecurso("Chk")).Width(50).Alignment(HorizontalAlignment.Center);
+							    columns.Add().DataField("Fuente").Visible(true).AllowEditing(false).Caption(languageResource.GetRecurso("ID")).Width(250).Alignment(HorizontalAlignment.Center);
+							    columns.Add().DataField("DESFUENTE").Visible(true).AllowEditing(false).Caption(languageResource.GetRecurso("Nombre")).Width(250).Alignment(HorizontalAlignment.Center);
+
+						    });
+					    })
+					    .NoDataText("No hay datos")
+					    .SearchPanel(searchPanel => searchPanel
+					    .Visible(true)
+					    .Width(240)
+					    .Placeholder("Buscar..."))
+					    .Paging(p => p.PageSize(10))
+					    .Pager(p => p
+						 .ShowInfo(true)
+						 .InfoText("Página {0} de {1} ({2} registros)")
+						 .ShowNavigationButtons(true)
+						 .ShowPageSizeSelector(false)
+						 .AllowedPageSizes(new int[] { 10, 50, 100 })
+						 .Visible(true))
+					)
+```
