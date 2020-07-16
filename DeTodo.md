@@ -166,3 +166,76 @@ function getDatosArticulo(data) {
 14 . Grilla que se Consulta atravez de un Sp, pero dentro de su propio Sp_Api **ConfigControlRentabilidadPorClienteProducto**
 
 15 . **SpAPI_ControlRentabilidadPorClienteProducto**
+
+16. Ejemplo de Get
+```js
+function refreshFuentes() {
+		var grid = $('#GridRollFuentesModel_grid').dxDataGrid('instance'),
+			idRoll = $('#idRoll').dxTextBox('instance').option("value");
+
+		if ((idRoll == "") || (idRoll == null) || (idRoll == undefined)) {
+			DevExpress.ui.notify("Seleccione un Roll", "warning", 2500);
+		} else {
+			$.ajax({
+				type: "GET",
+				url: `/GridRollFuentes/GetDataGrid?Id=${idRoll}`,
+				contentType: false,
+				processData: false,
+				async: true,
+				cache: false,
+				hideLoading: false,
+				success: function (data) {
+					if (data[0].TieneErrores) {
+						DevExpress.ui.notify(data[0].Errores[0], "warning", 2000);
+					} else {
+						grid.option("dataSource", data);
+						grid.refresh();
+
+						refreshFuentesSeries(data[0].Fuente);
+					}
+				},
+				error: function () {
+					DevExpress.ui.notify("Error al actualizar", "error", 2000);
+				}
+			});
+		}
+	}
+```
+
+17. Ejemplo de Post 
+```js
+function opcionesEnGrillaFuentes(e) {
+		var idRoll = $('#idRoll').dxTextBox('instance').option("value");
+
+		if ((idRoll == "") || (idRoll == null) || (idRoll == undefined)) {
+			DevExpress.ui.notify("Seleccione un Roll", "warning", 2500);
+		} else {
+			var parameters =
+			{
+				"Check": e.data.Check,
+				"Fuente": e.data.Fuente,
+				"DESFUENTE": e.data.DESFUENTE,
+				"IdRoll": parseInt(idRoll)
+			};
+
+			var formdata = new FormData();
+			formdata.append("data", JSON.stringify(parameters));
+			$.ajax({
+				type: "POST",
+				url: "/GridRollFuentes/IANDD",
+				data: formdata,
+				contentType: false,
+				processData: false,
+				async: true,
+				cache: false,
+				hideLoading: false,
+				success: function () {
+					DevExpress.ui.notify("Guardado satisfactoriamente", "success", 2500);
+				},
+				error: function () {
+					DevExpress.ui.notify("Error al Guardadar", "error", 2500);
+				}
+			});
+		}
+	}
+```
