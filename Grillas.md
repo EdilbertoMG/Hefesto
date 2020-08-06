@@ -267,11 +267,11 @@ window.kitEdit = {
 			onFormSuccess: onFormSuccess,
 			onFormFailure: onFormFailure,
 			OnBeforeSubmit: function () {
-				var Kit_ArticulosGrid = $("#View_Kit_ArticulosModel_grid").dxDataGrid("getDataSource"),
-					Kit_ConceptosGrid = $("#View_Kit_ConceptosModel_grid").dxDataGrid("getDataSource");
+				var Kit_ArticulosGrid = $('#View_Kit_ArticulosModel_grid').dxDataGrid('instance').option("dataSource"),
+					Kit_ConceptosGrid = $('#View_Kit_ConceptosModel_grid').dxDataGrid('instance').option("dataSource");
 
-			$("#Kit_ArticulosGridSerialized").val(JSON.stringify(Kit_ArticulosGrid["_store"]["_array"]));
-			$("#Kit_ConceptosSerialized").val(JSON.stringify(Kit_ConceptosGrid["_store"]["_array"]));
+			$("#Kit_ArticulosGridSerialized").val(JSON.stringify(Kit_ArticulosGrid));
+			$("#Kit_ConceptosSerialized").val(JSON.stringify(Kit_ConceptosGrid));
 			return true;
 			}
 		};
