@@ -286,3 +286,14 @@ function opcionesEnGrillaFuentes(e) {
 						 .Visible(true))
 					)
 ```
+19. Extraer los nombre de los campos de una Tabla
+```c#
+public string BuscarDatosSelect(string SpRpt)
+		{
+			List<string> result = (ZeusContextDb as ZeusContextoDB).GetColumnsFromProcedure("SpRptVariables_Funciones",
+				new SqlParameter("@Op", "ColumnasSpRpt"),
+				new SqlParameter("@SpRpt", SpRpt));
+
+			return JsonConvert.SerializeObject(result);
+		}
+```
