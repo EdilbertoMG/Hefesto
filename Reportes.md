@@ -662,3 +662,40 @@ FechaCorteInicial = new DateTime(FechaCorte.Year, FechaCorte.Month, 1);
 $("#hefesto-block-loading").addClass("blockScreenGifLoading");
 $("#container-zeus").addClass("blockScreenUnder");
 ```
+
+# 17.	Enviar un Modelo desde JavaScript (JQuery) aun con controlador .Net Core
+```js
+var model =
+			{
+				"Iden": e.data.Iden,
+				"CampoJoin": e.data.CampoJoin,
+				"CampoVista": e.data.CampoVista
+			};
+
+			var formdata = new FormData();
+			formdata.append("data", model);
+			$.ajax({
+				type: "POST",
+				url: "/GridFacturaElectronicaExtensionesDinamicasRelaciones/Remove",
+				contentType: 'application/json',
+				dataType: 'json',
+				data: JSON.stringify(model),
+				processData: false,
+				async: true,
+				cache: false,
+				hideLoading: false,
+				success: function () {
+					DevExpress.ui.notify("Eliminado satisfactoriamente", "success", 2500);
+				},
+				error: function () {
+					DevExpress.ui.notify("Error al Eliminar", "error", 2500);
+				}
+			});
+```
+```c#
+[HttpPost]
+		public GridFacturaElectronicaExtensionesDinamicasRelacionesModel Remove([FromBody]GridFacturaElectronicaExtensionesDinamicasRelacionesModel model)
+		{
+			return Manager().GridFacturaElectronicaExtensionesDinamicasRelacionesBusinessLogic().Remove(model).ToModel();
+		}
+```
