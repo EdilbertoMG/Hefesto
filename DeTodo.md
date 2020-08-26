@@ -297,3 +297,40 @@ public string BuscarDatosSelect(string SpRpt)
 			return JsonConvert.SerializeObject(result);
 		}
 ```
+20. Guardar Con Modelo Directamente
+```js
+let model =
+		{
+			"IdiomaDiccionarioIden": e.data.IdiomaDiccionarioIden,
+			"IdiomaTiposIden": e.data.IdiomaTiposIden,
+			"frace": e.data.frace,
+			"Traduccion": e.data.Traduccion,
+			"Proteger": e.data.Proteger
+		};
+
+		$.ajax({
+			type: "POST",
+			url: "/ConfigIdiomaControles/Edit",
+			contentType: 'application/json',
+			dataType: 'json',
+			data: JSON.stringify(model),
+			processData: false,
+			async: true,
+			cache: false,
+			hideLoading: false,
+			success: function () {
+				refreshGrid(codigo);
+				DevExpress.ui.notify("Guardado satisfactoriamente", "success", 2500);
+			},
+			error: function () {
+				DevExpress.ui.notify("Error al Eliminar", "error", 2500);
+			}
+		});
+```
+```c#
+[HttpPost]
+		public ActionResult Edit(ConfigIdiomaControlesModel model)
+		{
+			return PartialView("ConfigIdiomaControlesEdit", EditModel(model));
+		}
+```
