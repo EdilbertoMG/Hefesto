@@ -329,7 +329,7 @@ let model =
 ```
 ```c#
 [HttpPost]
-		public ActionResult Edit(ConfigIdiomaControlesModel model)
+		public ActionResult Edit([FromBody]ConfigIdiomaControlesModel model)
 		{
 			return PartialView("ConfigIdiomaControlesEdit", EditModel(model));
 		}
