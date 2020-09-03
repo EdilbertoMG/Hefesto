@@ -334,3 +334,51 @@ let model =
 			return EditModel(model);
 		}
 ```
+21. Subir Archivo Plano y Convetirlo en un Arreglo
+```c#
+<div class="col-xl-3 col-lg-3 col-md-3">
+						<div class="center-block">
+							@(Html.DevExtreme().FileUploader()
+							    .Name("archivoPlano")
+							    .SelectButtonText("Cargar Archivo Plano")
+							    .LabelText("")
+							    .Accept("text/plain")
+							    .ID("archivoPlano")
+							    .OnUploaded("archivoPlano")
+							    .Visible(false)
+							)
+						</div>
+					</div>
+```
+```js
+function archivoPlano(e) {
+		let lector = new FileReader(),
+			text = e.file;
+
+		lector.addEventListener("load",
+			function (evento) {
+				let cadena = evento.target.result;
+
+				if (cadena === '') {
+					DevExpress.ui.notify('Este archivo no contiene datos', "warning", 2000);
+				} else {
+					archivoPlanoAjax(cadena);
+				}
+
+			}, false);
+
+		lector.readAsText(text);
+	}
+
+	function archivoPlanoAjax(data) {
+		let Array = data.split("\n");
+	}
+```
+22. Simular Click en un dxFileUploader desde un boton
+```js
+function CargarArchivoPlano() {
+		var fileUploader = $('#archivoPlano').dxFileUploader('instance');
+		fileUploader._isCustomClickEvent = true;
+		fileUploader._$fileInput.click();
+	}
+```
