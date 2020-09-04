@@ -345,7 +345,8 @@ let model =
 	tooltip = "Cargar Archivo Plano"
 	}
 }
-
+```
+```c#
 <div class="col-xl-3 col-lg-3 col-md-3">
 						<div class="center-block">
 							@(Html.DevExtreme().FileUploader()
