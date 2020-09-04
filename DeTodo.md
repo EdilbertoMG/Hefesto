@@ -336,6 +336,16 @@ let model =
 ```
 21. Subir Archivo Plano y Convetirlo en un Arreglo
 ```c#
+@{
+	List<object> buttonsList = new List<object>
+	{
+	new {
+	htmlContent = "<i class=\"fas fa-file-upload\"></i>",
+	action = "javascript:CargarArchivoPlano()",
+	tooltip = "Cargar Archivo Plano"
+	}
+}
+
 <div class="col-xl-3 col-lg-3 col-md-3">
 						<div class="center-block">
 							@(Html.DevExtreme().FileUploader()
