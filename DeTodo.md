@@ -393,3 +393,5 @@ function CargarArchivoPlano() {
 		fileUploader._$fileInput.click();
 	}
 ```
+
+22. SpApi donde se maneja xml de diferentes entidades **SpAPI_ConfigDescuentosVentasPeriodosGrid**
