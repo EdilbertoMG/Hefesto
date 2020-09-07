@@ -394,4 +394,4 @@ function CargarArchivoPlano() {
 	}
 ```
 
-22. SpApi donde se maneja xml de diferentes entidades **SpAPI_ConfigDescuentosVentasPeriodosGrid**
+23. SpApi donde se maneja xml de diferentes entidades **SpAPI_ConfigDescuentosVentasPeriodosGrid**
