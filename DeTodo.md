@@ -395,3 +395,57 @@ function CargarArchivoPlano() {
 ```
 
 23. SpApi donde se maneja xml de diferentes entidades **SpAPI_ConfigDescuentosVentasPeriodosGrid**
+
+24. Buscador que se tiene un parametro adicional
+```cshtml
+<div class="col-xl-3 col-lg-3 col-md-3">
+					<div class="form-group">
+						<div class="md-form">
+							@(Html.Inventario().SelectBox()
+							.DataSource(Model.ListTipoDocumento)
+							.DisplayExpr("Texto")
+							.ValueExpr("Valor")
+							.Value(Model.ListTipoDocumento[0].Codigo)
+							.ID("tipoDocumento")
+							.Placeholder("Seleccione Tipo de Documento")
+						)
+						</div>
+					</div>
+				</div>
+```
+```cshtml
+<div class="col-xl-3 col-lg-3 col-md-3">
+					<div class="form-group">
+						<div class="input-group mb-3 searcher-group">
+							@(Html.Zeus().TextBoxFor(m => m.ConsecutivoInicial)
+							.InputAttr(new
+							{
+								maxlength = "form-control searcher-field searcher-event",
+								@class = "form-control searcher-field searcher-event",
+								idBtnSearcher = "consecutivoInicial_btnOpenSearcher",
+								panelHeader = panelHeader,
+								panelGeneral = panelGeneral
+							}).MaxLength(25)
+							.ID("consecutivoInicial")
+							)
+							<a id="consecutivoInicial_btnOpenSearcher" title="Buscar"
+							   class="input-group-append searcher-btn searcher-btn-event"
+							   searcherCode="CabeceraDeDocumentos"
+							   typeSelect="CHOICE"
+							   addConditionParams=@(@"{'@param1' : {
+	    							'valTarget' : '#tipoDocumento',
+	    							'typeField' : 'dxselect',
+	    							'usePrefixed' : false,
+	    							'isReq' : false
+	    							}}"
+	    						.Replace(" ", ""))
+							   funcCallBack="getConsecutivoInicial"
+							   prefix=""
+							   textboxF4=""
+							   nextFieldFocus="">
+								<i class="fas fa-search searcher-icon"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+```
