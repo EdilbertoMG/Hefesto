@@ -450,3 +450,4 @@ function CargarArchivoPlano() {
 					</div>
 				</div>
 ```
+25. Modal como Ventana **ConfigDiasSinIva**
