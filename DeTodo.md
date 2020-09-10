@@ -388,10 +388,11 @@ function archivoPlano(e) {
 22. Simular Click en un dxFileUploader desde un boton
 ```js
 function CargarArchivoPlano() {
-		var fileUploader = $('#archivoPlano').dxFileUploader('instance');
-		fileUploader._isCustomClickEvent = true;
-		fileUploader._$fileInput.click();
-	}
+        let fileUploader = $('#archivoPlano').dxFileUploader('instance');
+        fileUploader.reset();
+        fileUploader.isCustomClickEvent = true;
+        fileUploader.$fileInput.click();
+    }
 ```
 
 23. SpApi donde se maneja xml de diferentes entidades **SpAPI_ConfigDescuentosVentasPeriodosGrid**
