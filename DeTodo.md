@@ -389,9 +389,9 @@ function archivoPlano(e) {
 ```js
 function CargarArchivoPlano() {
         let fileUploader = $('#archivoPlano').dxFileUploader('instance');
-        fileUploader.reset();
-        fileUploader.isCustomClickEvent = true;
-        fileUploader.$fileInput.click();
+	fileUploader.reset();
+	fileUploader._isCustomClickEvent = true;
+	fileUploader._$fileInput.click();
     }
 ```
 
