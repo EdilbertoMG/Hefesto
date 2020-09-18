@@ -451,3 +451,11 @@ function CargarArchivoPlano() {
 				</div>
 ```
 25. Modal como Ventana **ConfigDiasSinIva**
+
+26. Verfificar si los Datos no son Null cuando vienen de la Base
+```c#
+if (!(resultado.IDEN is DBNull))
+					{
+						newModel.IDEN = resultado.IDEN;
+					}
+```
