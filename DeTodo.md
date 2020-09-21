@@ -459,3 +459,4 @@ if (!(resultado.IDEN is DBNull))
 						newModel.IDEN = resultado.IDEN;
 					}
 ```
+27. SpApi donde se usa un While para recorrer una tabla temporal y se manda a ejecutar una accion **SpAPI_ConfigConsumoDirectoVariables**
