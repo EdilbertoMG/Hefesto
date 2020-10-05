@@ -47,18 +47,18 @@ let indiceF = textarea["0"].selectionEnd;
 12. Cargar Articulo y Presentacion
 ```cshtml
 <div class="row">
-					<div class="col-xl-3 col-lg-3 col-md-3" style="display: none;">
-						<div class="form-group">
-							@(Html.Inventario().NumberBoxFor(m => m.IdArticulo).InputAttr("maxlength", 2147483647).ID("IdArticulo"))
-						</div>
-					</div>
-					<div class="col-xl-3 col-lg-3 col-md-3">
-						<div class="form-group">
-							<label for=@(ViewBag.PrefixConfigControlRentabilidadPorClienteProducto + "_CodigoArticulo")>
-								<span asp-validation-for="CodigoArticulo" class="lbl-msg-required">@languageResource.GetRecurso("CodigoArticulo")</span>
-							</label>
-							<div class="input-group mb-3 searcher-group">
-								@(Html.Zeus().TextBoxFor(m => m.CodigoArticulo)
+		<div class="col-xl-3 col-lg-3 col-md-3" style="display: none;">
+			<div class="form-group">
+				@(Html.Inventario().NumberBoxFor(m => m.IdArticulo).ID("IdArticulo"))
+			</div>
+		</div>
+		<div class="col-xl-3 col-lg-3 col-md-3">
+			<div class="form-group">
+				<label for=@(ViewBag.PrefixConfigPrepararSeries + "_CodigoArticulo")>
+					<span class="lbl-msg-required">@languageResource.GetRecurso("Artículo")</span>
+				</label>
+				<div class="input-group mb-3 searcher-group">
+					@(Html.Zeus().TextBox()
                                                             .InputAttr(new
                                                             {
                                                                 @class = "form-control searcher-field searcher-event",
@@ -69,44 +69,43 @@ let indiceF = textarea["0"].selectionEnd;
                                                             })
 							    .ID("CodigoArticulo")
                                                             )
-								<a id="btnOpenSearcherArticulo" title="Buscar"
-								   class="input-group-append searcher-btn searcher-btn-event"
-								   searcherCode="ARTICULO"
-								   typeSelect="CHOICE"
-								   funcCallBack="getDatosArticulo"
-								   prefix=""
-								   textboxF4=""
-								   nextFieldFocus="">
-									<i class="fas fa-search searcher-icon"></i>
-								</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-lg-3 col-md-3">
-						<div class="form-group">
-							<label for=@(ViewBag.PrefixConfigControlRentabilidadPorClienteProducto + "_NombreArticulo")>
-								<span asp-validation-for="NombreArticulo" class="lbl-msg-required">@languageResource.GetRecurso("Nombre")</span>
-							</label>
-							@(Html.Inventario().TextBoxFor(m => m.NombreArticulo).InputAttr(new { @class = "form-control", maxlength = 100 }).ReadOnly(true).ID("NombreArticulo"))
-						</div>
-					</div>
-					<div class="col-xl-3 col-lg-3 col-md-3">
-						<div class="form-group">
-							<label for=@(ViewBag.PrefixConfigControlRentabilidadPorClienteProducto + "_Presentacion")>
-								<span class="lbl-msg-required">@languageResource.GetRecurso("Presentación")</span>
-							</label>
-							<div class="md-form">
-							@(Html.Inventario().SelectBoxFor(m => m.Presentacion)
+					<a id="btnOpenSearcherArticulo" title="Buscar"
+					   class="input-group-append searcher-btn searcher-btn-event"
+					   searcherCode="ARTICULO"
+					   typeSelect="CHOICE"
+					   funcCallBack="getDatosArticulo"
+					   prefix=""
+					   textboxF4=""
+					   nextFieldFocus="">
+						<i class="fas fa-search searcher-icon"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-xl-3 col-lg-3 col-md-3">
+			<div class="form-group">
+				<label for=@(ViewBag.PrefixConfigPrepararSeries + "_NombreArticulo")>
+					<span class="lbl-msg-required">@languageResource.GetRecurso("Nombre")</span>
+				</label>
+				@(Html.Inventario().TextBox().InputAttr(new { @class = "form-control", maxlength = 100 }).ReadOnly(true).ID("NombreArticulo"))
+			</div>
+		</div>
+		<div class="col-xl-3 col-lg-3 col-md-3">
+			<div class="form-group">
+				<label for=@(ViewBag.PrefixConfigPrepararSeries + "_Presentacion")>
+					<span class="lbl-msg-required">@languageResource.GetRecurso("Presentación")</span>
+				</label>
+				<div class="md-form">
+					@(Html.Inventario().SelectBox()
 							.ID("PresentacionArticulo")
 							.Disabled(false)
 							.Placeholder("Seleccione Presentación")
 							.OnValueChanged("OnChangePresentacion")
 							)
-							</div>
-						</div>
-					</div>
 				</div>
-
+			</div>
+		</div>
+	</div>
 ```
 ```js
 <!-- Exportacion de JS con funciones generales de Inventario -->
@@ -114,7 +113,6 @@ let indiceF = textarea["0"].selectionEnd;
 <!-- Exportacion de JS con funciones generales de Inventario -->
 ```
 ```js
-<!-- Exportacion de JS con funciones generales de Inventario -->
 function getDatosArticulo(data) {
 		var registro = data.data[0],
 			codigo = $("#CodigoArticulo").dxTextBox("instance"),
