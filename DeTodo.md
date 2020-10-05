@@ -119,7 +119,7 @@ function getDatosArticulo(data) {
 			nombre = $("#NombreArticulo").dxTextBox("instance"),
 			id = $("#IdArticulo").dxNumberBox("instance");
 
-		if (data.data[0]) {
+		if (registro) {
 			codigo.option({ "value": registro.Codigo});
 			nombre.option({ "value": registro.Nombre });
 			id.option({ "value": registro.IdArticulo });
@@ -131,7 +131,8 @@ function getDatosArticulo(data) {
 
 			$("#PresentacionArticulo").dxSelectBox({
 				"value": "",
-				"placeholder": "Seleccione Presentación"
+				"placeholder": "Seleccione Presentación",
+				"dataSource": []
 			});
 		}
 	}
