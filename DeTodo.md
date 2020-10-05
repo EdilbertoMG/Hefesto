@@ -458,3 +458,18 @@ if (!(resultado.IDEN is DBNull))
 					}
 ```
 27. SpApi donde se usa un While para recorrer una tabla temporal y se manda a ejecutar una accion **SpAPI_ConfigConsumoDirectoVariables**
+
+28. Texbox con solo Mayusculas
+```css
+<style type="text/css">  
+    .uppercase .dx-texteditor-input {  
+        text-transform: uppercase;  
+    }  
+</style>
+```
+```cshtml
+@(Html.DevExtreme().TextBox()  
+    .ElementAttr("class", "uppercase")  
+    .Value("Test")  
+) 
+```
