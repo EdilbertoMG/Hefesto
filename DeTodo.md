@@ -474,3 +474,5 @@ if (!(resultado.IDEN is DBNull))
     .Value("Test")  
 ) 
 ```
+
+29. Ventana Modal que se abre desde el menu **CambiarFirmaDigital**
