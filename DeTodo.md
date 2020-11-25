@@ -477,3 +477,4 @@ if (!(resultado.IDEN is DBNull))
 
 29. Ventana Modal que se abre desde el menu **CambiarFirmaDigital**
 30. Ventana Config que contiene Generar Archivo Plano, Generar XML Y Reporte **ConfigCertificadosProveedor**
+31. Muestra Errores en una Lista con Popud  **ConfigArchivosPlanosActualizacionDePrecios**
